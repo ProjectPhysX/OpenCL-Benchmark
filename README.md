@@ -1,8 +1,14 @@
 # OpenCL-Benchmark
 
 A small [OpenCL](https://github.com/ProjectPhysX/OpenCL-Wrapper "OpenCL-Wrapper") benchmark program to measure peak GPU/CPU performance.
-
 Works with any GPU in Windows, Linux, macOS and Android.
+
+
+
+## Features
+- compute performance (FP64, FP32, FP16, INT64, INT32, INT16, INT8)
+- memory bandwidth (coalesced/misaligned read/write)
+- PCIe bandwidth (send/receive/bidirectional)
 
 
 
@@ -14,7 +20,7 @@ Works with any GPU in Windows, Linux, macOS and Android.
   - select "Release" and "x64" and hit compile+run
 - Run
   ```
-  bin/OpenCL-Benchmark.exe
+  OpenCL-Benchmark.exe
   ```
 
 ### Linux
@@ -36,7 +42,7 @@ Works with any GPU in Windows, Linux, macOS and Android.
   git clone https://github.com/ProjectPhysX/OpenCL-Benchmark.git
   cd OpenCL-Benchmark
   vim make.sh
-  # press <kbd>i</kbd>, comment the line "compile on Linux" line with an "#", uncomment "compile on macOS" line by removing the "#" in front of the line, press <kbd>Esc</kbd> <kbd>:</kbd> <kbd>w</kbd> <kbd>q</kbd> <kbd>Enter</kbd>
+  # press i, comment the line "compile on Linux" line with an "#", uncomment "compile on macOS" line by removing the "#" in front of the line, press Esc : w q Enter
   chmod +x make.sh
   ./make.sh
   ```
@@ -46,7 +52,7 @@ Works with any GPU in Windows, Linux, macOS and Android.
   ```
 
 ### Run only for a specified list of devices
-- call `OpenCL-Benchmark.exe 0 2 5`/`bin/OpenCL-Benchmark 0 2 5` with the number(s) being the device IDs to be benchmarked
+- call `OpenCL-Benchmark.exe 0 2 5` (Windows) or `bin/OpenCL-Benchmark 0 2 5` (Linux/macOS) with the number(s) being the device IDs to be benchmarked
 
 
 
