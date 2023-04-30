@@ -6,7 +6,7 @@ Works with any GPU in Windows, Linux, macOS and Android.
 
 
 
-## Features
+## Measurements
 - compute performance (FP64, FP32, FP16, INT64, INT32, INT16, INT8)
 - memory bandwidth (coalesced/misaligned read/write)
 - PCIe bandwidth (send/receive/bidirectional)
