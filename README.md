@@ -1,6 +1,7 @@
 # OpenCL-Benchmark
 
 A small [OpenCL](https://github.com/ProjectPhysX/OpenCL-Wrapper "OpenCL-Wrapper") benchmark program to measure peak GPU/CPU performance.
+
 Works with any GPU in Windows, Linux, macOS and Android.
 
 
