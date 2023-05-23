@@ -18,7 +18,7 @@ Works with any GPU in Windows, Linux, macOS and Android.
 ### Windows
 - Compile+Run
   - open `OpenCL-Benchmark.vcxproj` in Visual Studio Community
-  - select "Release" and "x64" and hit compile+run
+  - click compile+run
 - Run
   ```
   OpenCL-Benchmark.exe
