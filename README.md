@@ -16,13 +16,13 @@ Works with any GPU in Windows, Linux, macOS and Android.
 ## How to use?
 
 ### Windows
-  - Download and install [Visual Studio Community](https://visualstudio.microsoft.com/de/vs/community/). In Visual Studio Installer, add:
-    - Desktop development with C++
-    - MSVC v142
-    - Windows 10 SDK
-  - Open [`OpenCL-Benchmark.sln`](OpenCL-Benchmark.sln) in [Visual Studio Community](https://visualstudio.microsoft.com/de/vs/community/).
-  - Compile and run by clicking the <kbd>► Local Windows Debugger</kbd> button.
-  - To run outside of [Visual Studio Community](https://visualstudio.microsoft.com/de/vs/community/), open Windows CMD in the `OpenCL-Benchmark` folder (type `cmd` in File Explorer in the directory field and press <kbd>Enter</kbd>), then run
+- Download and install [Visual Studio Community](https://visualstudio.microsoft.com/de/vs/community/). In Visual Studio Installer, add:
+  - Desktop development with C++
+  - MSVC v142
+  - Windows 10 SDK
+- Open [`OpenCL-Benchmark.sln`](OpenCL-Benchmark.sln) in [Visual Studio Community](https://visualstudio.microsoft.com/de/vs/community/).
+- Compile and run by clicking the <kbd>► Local Windows Debugger</kbd> button.
+- To run outside of [Visual Studio Community](https://visualstudio.microsoft.com/de/vs/community/), open Windows CMD in the `OpenCL-Benchmark` folder (type `cmd` in File Explorer in the directory field and press <kbd>Enter</kbd>), then run
   ```
   OpenCL-Benchmark.exe
   ```
