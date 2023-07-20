@@ -16,16 +16,19 @@ Works with any GPU in Windows, Linux, macOS and Android.
 ## How to use?
 
 ### Windows
-- Compile+Run
-  - open `OpenCL-Benchmark.vcxproj` in Visual Studio Community
-  - click compile+run
-- Run
+  - Download and install [Visual Studio Community](https://visualstudio.microsoft.com/de/vs/community/). In Visual Studio Installer, add:
+    - Desktop development with C++
+    - MSVC v142
+    - Windows 10 SDK
+  - Open [`OpenCL-Benchmark.sln`](OpenCL-Benchmark.sln) in [Visual Studio Community](https://visualstudio.microsoft.com/de/vs/community/).
+  - Compile and run by clicking the <kbd>► Local Windows Debugger</kbd> button.
+  - To run outside of [Visual Studio Community](https://visualstudio.microsoft.com/de/vs/community/), open Windows CMD in the `OpenCL-Benchmark` folder (type `cmd` in File Explorer in the directory field and press <kbd>Enter</kbd>), then run
   ```
   OpenCL-Benchmark.exe
   ```
 
 ### Linux
-- Compile+Run
+- Download, compile and run:
   ```
   git clone https://github.com/ProjectPhysX/OpenCL-Benchmark.git
   cd OpenCL-Benchmark
@@ -38,7 +41,7 @@ Works with any GPU in Windows, Linux, macOS and Android.
   ```
 
 ### macOS
-- Compile+Run
+- ownload, compile and run:
   ```
   git clone https://github.com/ProjectPhysX/OpenCL-Benchmark.git
   cd OpenCL-Benchmark
@@ -135,11 +138,37 @@ Works with any GPU in Windows, Linux, macOS and Android.
 | Device ID    3 | gfx906:sramecc+:xnack-                                     |
 | Device ID    4 | gfx906:sramecc+:xnack-                                     |
 | Device ID    5 | gfx906:sramecc+:xnack-                                     |
-| Device ID    6 | gfx906:sramecc+:xnack-                                     |
+| Device ID    6 | gfx90a:sramecc+:xnack-                                     |
 | Device ID    7 | gfx906:sramecc+:xnack-                                     |
 |----------------'------------------------------------------------------------|
 |----------------.------------------------------------------------------------|
-| Device ID      | 0                                                          |
+| Device ID      | 6                                                          |
+| Device Name    | gfx90a:sramecc+:xnack-                                     |
+| Device Vendor  | Advanced Micro Devices, Inc.                               |
+| Device Driver  | 3513.0 (HSA1.1,LC)                                         |
+| OpenCL Version | OpenCL C 2.0                                               |
+| Compute Units  | 104 at 1700 MHz (6656 cores, 22.630 TFLOPs/s)              |
+| Memory, Cache  | 65520 MB, 16 KB global / 64 KB local                       |
+| Buffer Limits  | 55692 MB global, 57028608 KB constant                      |
+|----------------'------------------------------------------------------------|
+| Info: OpenCL C code successfully compiled.                                  |
+| FP64  compute                                        17.356 TFLOPs/s (2/3 ) |
+| FP32  compute                                        19.995 TFLOPs/s ( 1x ) |
+| FP16  compute                                        39.680 TFLOPs/s ( 2x ) |
+| INT64 compute                                         1.511  TIOPs/s (1/16) |
+| INT32 compute                                        18.441  TIOPs/s (2/3 ) |
+| INT16 compute                                        19.679  TIOPs/s ( 1x ) |
+| INT8  compute                                        13.294  TIOPs/s (2/3 ) |
+| Memory Bandwidth ( coalesced read      )                        967.34 GB/s |
+| Memory Bandwidth ( coalesced      write)                        979.27 GB/s |
+| Memory Bandwidth (misaligned read      )                       1302.28 GB/s |
+| Memory Bandwidth (misaligned      write)                        634.80 GB/s |
+| PCIe   Bandwidth (send                 )                         17.66 GB/s |
+| PCIe   Bandwidth (   receive           )                         17.60 GB/s |
+| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   17.30 GB/s |
+|-----------------------------------------------------------------------------|
+|----------------.------------------------------------------------------------|
+| Device ID      | 7                                                          |
 | Device Name    | gfx906:sramecc+:xnack-                                     |
 | Device Vendor  | Advanced Micro Devices, Inc.                               |
 | Device Driver  | 3513.0 (HSA1.1,LC)                                         |
@@ -163,6 +192,46 @@ Works with any GPU in Windows, Linux, macOS and Android.
 | PCIe   Bandwidth (send                 )                         10.36 GB/s |
 | PCIe   Bandwidth (   receive           )                         10.28 GB/s |
 | PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   10.32 GB/s |
+|-----------------------------------------------------------------------------|
+|-----------------------------------------------------------------------------|
+| Done. Press Enter to exit.                                                  |
+'-----------------------------------------------------------------------------'
+```
+```
+.-----------------------------------------------------------------------------.
+|----------------.------------------------------------------------------------|
+| Device ID    0 | Intel(R) FPGA Emulation Device                             |
+| Device ID    1 | Intel(R) Xeon(R) Platinum 8480+                            |
+| Device ID    2 | Intel(R) Data Center GPU Max 1100                          |
+| Device ID    3 | Intel(R) Data Center GPU Max 1100                          |
+| Device ID    4 | Intel(R) Data Center GPU Max 1100                          |
+| Device ID    5 | Intel(R) Data Center GPU Max 1100                          |
+|----------------'------------------------------------------------------------|
+|----------------.------------------------------------------------------------|
+| Device ID      | 2                                                          |
+| Device Name    | Intel(R) Data Center GPU Max 1100                          |
+| Device Vendor  | Intel(R) Corporation                                       |
+| Device Driver  | 23.17.26241.33                                             |
+| OpenCL Version | OpenCL C 1.2                                               |
+| Compute Units  | 448 at 1550 MHz (7168 cores, 22.221 TFLOPs/s)              |
+| Memory, Cache  | 46679 MB, 196608 KB global / 128 KB local                  |
+| Buffer Limits  | 46679 MB global, 47799500 KB constant                      |
+|----------------'------------------------------------------------------------|
+| Info: OpenCL C code successfully compiled.                                  |
+| FP64  compute                                        16.314 TFLOPs/s ( 1x ) |
+| FP32  compute                                        21.932 TFLOPs/s ( 2x ) |
+| FP16  compute                                        41.413 TFLOPs/s ( 4x ) |
+| INT64 compute                                         1.082  TIOPs/s (1/12) |
+| INT32 compute                                         7.028  TIOPs/s (2/3 ) |
+| INT16 compute                                        60.320  TIOPs/s ( 4x ) |
+| INT8  compute                                        38.822  TIOPs/s ( 4x ) |
+| Memory Bandwidth ( coalesced read      )                        739.91 GB/s |
+| Memory Bandwidth ( coalesced      write)                        888.49 GB/s |
+| Memory Bandwidth (misaligned read      )                        718.96 GB/s |
+| Memory Bandwidth (misaligned      write)                        319.63 GB/s |
+| PCIe   Bandwidth (send                 )                         25.42 GB/s |
+| PCIe   Bandwidth (   receive           )                         23.10 GB/s |
+| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   32.31 GB/s |
 |-----------------------------------------------------------------------------|
 |-----------------------------------------------------------------------------|
 | Done. Press Enter to exit.                                                  |
