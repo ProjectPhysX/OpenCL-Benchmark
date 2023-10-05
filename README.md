@@ -41,7 +41,7 @@ Works with any GPU in Windows, Linux, macOS and Android.
   ```
 
 ### macOS
-- ownload, compile and run:
+- Download, compile and run:
   ```
   git clone https://github.com/ProjectPhysX/OpenCL-Benchmark.git
   cd OpenCL-Benchmark
