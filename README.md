@@ -27,26 +27,11 @@ Works with any GPU in Windows, Linux, macOS and Android.
   OpenCL-Benchmark.exe
   ```
 
-### Linux
+### Linux / macOS / Android
 - Download, compile and run:
   ```
   git clone https://github.com/ProjectPhysX/OpenCL-Benchmark.git
   cd OpenCL-Benchmark
-  chmod +x make.sh
-  ./make.sh
-  ```
-- Run
-  ```
-  bin/OpenCL-Benchmark
-  ```
-
-### macOS
-- Download, compile and run:
-  ```
-  git clone https://github.com/ProjectPhysX/OpenCL-Benchmark.git
-  cd OpenCL-Benchmark
-  vim make.sh
-  # press i, comment the line "compile on Linux" line with an "#", uncomment "compile on macOS" line by removing the "#" in front of the line, press Esc : w q Enter
   chmod +x make.sh
   ./make.sh
   ```
