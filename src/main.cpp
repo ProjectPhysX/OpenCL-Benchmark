@@ -33,24 +33,12 @@ void benchmark_device(const Device_Info& device_info) {
 	;
 	print("| Compiling ...                                                               |");
 	Device device(device_info, defines+get_opencl_c_code());
-
 	Memory<float> buffer(device, N, M);
-	Kernel kernel_double(device, N, "kernel_double", buffer);
-	Kernel kernel_float(device, N, "kernel_float", buffer);
-	Kernel kernel_half(device, N, "kernel_half", buffer);
-	Kernel kernel_long(device, N, "kernel_long", buffer);
-	Kernel kernel_int(device, N, "kernel_int", buffer);
-	Kernel kernel_short(device, N, "kernel_short", buffer);
-	Kernel kernel_char(device, N, "kernel_char", buffer);
-	Kernel kernel_coalesced_write(device, N, "kernel_coalesced_write" , buffer);
-	Kernel kernel_coalesced_read(device, N, "kernel_coalesced_read"  , buffer);
-	Kernel kernel_misaligned_write(device, N, "kernel_misaligned_write", buffer);
-	Kernel kernel_misaligned_read(device, N, "kernel_misaligned_read" , buffer);
-
 	//print_info("Device mormory usage: "+to_string(device.info.memory_used)+" MB");
 
 	if(device.info.is_fp64_capable) {
 		print("| Benchmarking ...                                                            |");
+		Kernel kernel_double(device, N, "kernel_double", buffer);
 		for(uint i=0u; i<N_kernel; i++) {
 			clock.start();
 			kernel_double.run();
@@ -63,6 +51,7 @@ void benchmark_device(const Device_Info& device_info) {
 	}
 
 	print("| Benchmarking ...                                                            |");
+	Kernel kernel_float(device, N, "kernel_float", buffer);
 	for(uint i=0u; i<N_kernel; i++) {
 		clock.start();
 		kernel_float.run();
@@ -73,6 +62,7 @@ void benchmark_device(const Device_Info& device_info) {
 
 	if(device.info.is_fp16_capable) {
 		print("| Benchmarking ...                                                            |");
+		Kernel kernel_half(device, N, "kernel_half", buffer);
 		for(uint i=0u; i<N_kernel; i++) {
 			clock.start();
 			kernel_half.run();
@@ -85,6 +75,7 @@ void benchmark_device(const Device_Info& device_info) {
 	}
 
 	print("| Benchmarking ...                                                            |");
+	Kernel kernel_long(device, N, "kernel_long", buffer);
 	for(uint i=0u; i<N_kernel; i++) {
 		clock.start();
 		kernel_long.run();
@@ -94,6 +85,7 @@ void benchmark_device(const Device_Info& device_info) {
 	println("\r| INT64 compute "+alignr(45u, to_string(flops_long, 3u))+"  TIOPs/s "+fraction(100.0f*flops_long/device.info.tflops)+" |");
 
 	print("| Benchmarking ...                                                            |");
+	Kernel kernel_int(device, N, "kernel_int", buffer);
 	for(uint i=0u; i<N_kernel; i++) {
 		clock.start();
 		kernel_int.run();
@@ -103,6 +95,7 @@ void benchmark_device(const Device_Info& device_info) {
 	println("\r| INT32 compute "+alignr(45u, to_string(flops_int, 3u))+"  TIOPs/s "+fraction(100.0f*flops_int/device.info.tflops)+" |");
 
 	print("| Benchmarking ...                                                            |");
+	Kernel kernel_short(device, N, "kernel_short", buffer);
 	for(uint i=0u; i<N_kernel; i++) {
 		clock.start();
 		kernel_short.run();
@@ -112,6 +105,7 @@ void benchmark_device(const Device_Info& device_info) {
 	println("\r| INT16 compute "+alignr(45u, to_string(flops_short, 3u))+"  TIOPs/s "+fraction(100.0f*flops_short/device.info.tflops)+" |");
 
 	print("| Benchmarking ...                                                            |");
+	Kernel kernel_char(device, N, "kernel_char", buffer);
 	for(uint i=0u; i<N_kernel; i++) {
 		clock.start();
 		kernel_char.run();
@@ -121,11 +115,13 @@ void benchmark_device(const Device_Info& device_info) {
 	println("\r| INT8  compute "+alignr(45u, to_string(flops_char, 3u))+"  TIOPs/s "+fraction(100.0f*flops_char/device.info.tflops)+" |");
 
 	print("| Benchmarking ...                                                            |");
+	Kernel kernel_coalesced_write(device, N, "kernel_coalesced_write" , buffer);
 	for(uint i=0u; i<N_kernel; i++) {
 		clock.start();
 		kernel_coalesced_write.run();
 		time_cw = fmin(clock.stop(), time_cw);
 	}
+	Kernel kernel_coalesced_read(device, N, "kernel_coalesced_read"  , buffer);
 	for(uint i=0u; i<N_kernel; i++) {
 		clock.start();
 		kernel_coalesced_read.run();
@@ -135,11 +131,13 @@ void benchmark_device(const Device_Info& device_info) {
 	println("\r| Memory Bandwidth ( coalesced      write) "+alignr(29u, to_string(4.0f*(float)N*(float)M/(float) time_cw                   *1E-9f, 2u))+" GB/s |");
 
 	print("| Benchmarking ...                                                            |");
+	Kernel kernel_misaligned_write(device, N, "kernel_misaligned_write", buffer);
 	for(uint i=0u; i<N_kernel; i++) {
 		clock.start();
 		kernel_misaligned_write.run();
 		time_mw = fmin(clock.stop(), time_mw);
 	}
+	Kernel kernel_misaligned_read(device, N, "kernel_misaligned_read" , buffer);
 	for(uint i=0u; i<N_kernel; i++) {
 		clock.start();
 		kernel_misaligned_read.run();
