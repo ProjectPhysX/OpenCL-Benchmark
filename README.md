@@ -41,7 +41,7 @@ Works with any GPU in Windows, Linux, macOS and Android.
   ```
 
 ### Run only for a specified list of devices
-- call `OpenCL-Benchmark.exe 0 2 5` (Windows) or `bin/OpenCL-Benchmark 0 2 5` (Linux/macOS) with the number(s) being the device IDs to be benchmarked
+- call `bin\OpenCL-Benchmark.exe 0 2 5` (Windows) or `bin/OpenCL-Benchmark 0 2 5` (Linux/macOS) with the number(s) being the device IDs to be benchmarked
 
 
 
