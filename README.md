@@ -7,9 +7,13 @@ Works with any GPU in Windows, Linux, macOS and Android.
 
 
 ## Measurements
-- compute performance (FP64, FP32, FP16, INT64, INT32, INT16, INT8)
-- memory bandwidth (coalesced/misaligned read/write)
-- PCIe bandwidth (send/receive/bidirectional)
+- compute performance (`FP64`, `FP32`, `FP16`, `INT64`, `INT32`, `INT16`, `INT8`)
+  - closest possible fraction/multiplicator of `measured compute performance` divided by `reported theoretical FP32 performance` is shown in `(round brackets)`
+    - for example when OpenCL reports `19.492` TFLOPs/s theoretical FP32, and the benchmark measures `9.512` TFLOPs/s for FP64, the ratio of `(measured FP64)/(theoretical FP32) = 9.512/19.492 = 1/2.05` is rounded to the next possible value of `1/2` and reported as such
+    - these ratios for any GPU/CPU architecture can only be either `1/64`, `1/32`, `1/24`, `1/16`, `1/12`, `1/8`, `1/4`, `1/3`, `1/2`, `2/3`, `1x`, `2x`, `4x`, `8x`, `16x`, `32x`, `64x`, and nothing in between
+- memory bandwidth (`coalesced`/`misaligned` `read`/`write`)
+- PCIe bandwidth (`send`/`receive`/`bidirectional`)
+  - PCIe Gen is estimated based on measured PCIe bandwidth and assumed x16 link width
 
 
 
