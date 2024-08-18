@@ -186,9 +186,13 @@ int main(int argc, char* argv[]) {
 	} else {
 		for(uint i=0u; i<(uint)devices.size(); i++) benchmark_device(devices[i]);
 	}
+#ifdef _WIN32
 	println("|-----------------------------------------------------------------------------|");
 	println("| Done. Press Enter to exit.                                                  |");
 	println("'-----------------------------------------------------------------------------'");
 	wait();
+#else // Linux
+	println("'-----------------------------------------------------------------------------'");
+#endif // Linux
 	return 0;
 }
