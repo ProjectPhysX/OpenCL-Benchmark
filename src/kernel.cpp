@@ -30,10 +30,10 @@ kernel void kernel_half(global float* data) {
 	half2 x = (half2)((float)get_global_id(0), (float)get_local_id(0));
 	half2 y = (half2)((float)get_local_id(0), (float)get_global_id(0));
 	for(uint i=0u; i<512u; i++) {
-		x = fma(y, x, y);
-		y = fma(x, y, x);
+		x = y*x+y;
+		y = x*y+x;
 	}
-	data[get_global_id(0)] = as_float(y);
+	data[get_global_id(0)] = (float)y.x+(float)y.y;
 }
 )+"#endif"+R( // cl_khr_fp16
 
@@ -41,8 +41,8 @@ kernel void kernel_long(global float* data) {
 	long x = (long)get_global_id(0);
 	long y = (long)get_local_id(0);
 	for(uint i=0u; i<8u; i++) {
-		x = (y*x)+y;
-		y = (x*y)+x;
+		x = y*x+y;
+		y = x*y+x;
 	}
 	data[get_global_id(0)] = as_float((int)y);
 }
@@ -51,8 +51,8 @@ kernel void kernel_int(global float* data) {
 	int x = get_global_id(0);
 	int y = get_local_id(0);
 	for(uint i=0u; i<512u; i++) {
-		x = (y*x)+y;
-		y = (x*y)+x;
+		x = y*x+y;
+		y = x*y+x;
 	}
 	data[get_global_id(0)] = as_float(y);
 }
@@ -61,8 +61,8 @@ kernel void kernel_short(global float* data) {
 	short2 x = as_short2((int)get_global_id(0));
 	short2 y = as_short2((int)get_local_id(0));
 	for(uint i=0u; i<128u; i++) {
-		x = (y*x)+y;
-		y = (x*y)+x;
+		x = y*x+y;
+		y = x*y+x;
 	}
 	data[get_global_id(0)] = as_float(y);
 }
@@ -71,8 +71,8 @@ kernel void kernel_char(global float* data) {
 	char4 x = as_char4((int)get_global_id(0));
 	char4 y = as_char4((int)get_local_id(0));
 	for(uint i=0u; i<64u; i++) {
-		x = (y*x)+y;
-		y = (x*y)+x;
+		x = y*x+y;
+		y = x*y+x;
 	}
 	data[get_global_id(0)] = as_float(y);
 }

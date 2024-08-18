@@ -587,7 +587,7 @@ inline string replace_regex(const string& s, const string& from, const string& t
 inline bool is_number(const string& s) {
 	return equals_regex(s, "\\d+(u|l|ul|ll|ull)?")||equals_regex(s, "0x(\\d|[a-fA-F])+(u|l|ul|ll|ull)?")||equals_regex(s, "0b[01]+(u|l|ul|ll|ull)?")||equals_regex(s, "(((\\d+\\.?\\d*|\\.\\d+)([eE][+-]?\\d+[fF]?)?)|(\\d+\\.\\d*|\\.\\d+)[fF]?)");
 }
-inline void print_message(const string& message, const string& keyword="", const int colons=true) { // print formatted message
+inline void print_message(const string& message, const string& keyword="", const int keyword_color=-1, const int colons=true) { // print formatted message
 	const uint k=length(keyword)+2u, w=CONSOLE_WIDTH-4u-k;
 	string p=colons?": ":"  ", f="";
 	for(uint j=0u; j<k; j++) f += " ";
@@ -713,6 +713,14 @@ inline void print_info(const string& s) { // print info message
 	println("Info: "+s);
 }
 #endif // UTILITIES_REGEX
+
+inline void set_environment_variable(char* s) { // usage: set_environment_variable((char*)"VARIABLE=VALUE");
+#if defined(_WIN32)
+	(void)_putenv(s);
+#elif defined(__linux__)
+	(void) putenv(s);
+#endif // Linux
+}
 
 #ifdef UTILITIES_FILE
 #include <fstream> // read/write files
