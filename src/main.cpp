@@ -146,33 +146,35 @@ void benchmark_device(const Device_Info& device_info) {
 	println("\r| Memory Bandwidth (misaligned read      ) "+alignr(29u, to_string(4.0f*(float)N*(float)M/(float)(time_mr-time_cw/(double)M)*1E-9f, 2u))+" GB/s |");
 	println("\r| Memory Bandwidth (misaligned      write) "+alignr(29u, to_string(4.0f*(float)N*(float)M/(float) time_mw                   *1E-9f, 2u))+" GB/s |");
 
-	print("| Benchmarking ...                                                            |");
-	for(uint i=0u; i<N_memory; i++) {
-		clock.start();
-		buffer.write_to_device();
-		time_send = fmin(clock.stop(), time_send);
+	if(!device.info.uses_ram) {
+		print("| Benchmarking ...                                                            |");
+		for(uint i=0u; i<N_memory; i++) {
+			clock.start();
+			buffer.write_to_device();
+			time_send = fmin(clock.stop(), time_send);
+		}
+		const float bw_send = 4.0f*M*N/(float)time_send*1E-9f;
+		println("\r| PCIe   Bandwidth (send                 ) "+alignr(29u, to_string(bw_send, 2u))+" GB/s |");
+		print("| Benchmarking ...                                                            |");
+		for(uint i=0u; i<N_memory; i++) {
+			clock.start();
+			buffer.read_from_device();
+			time_receive = fmin(clock.stop(), time_receive);
+		}
+		const float bw_receive = 4.0f*M*N/(float)time_receive*1E-9f;
+		println("\r| PCIe   Bandwidth (   receive           ) "+alignr(29u, to_string(bw_receive, 2u))+" GB/s |");
+		print("| Benchmarking ...                                                            |");
+		for(uint i=0u; i<N_memory; i++) {
+			clock.start();
+			buffer.read_from_device(N*M/2u, N*M, false);
+			buffer.write_to_device(0u, N*M/2u, false);
+			buffer.finish_queue();
+			time_bidirectional = fmin(clock.stop(), time_bidirectional);
+		}
+		const float bw_bidirectional = 4.0f*M*N/(float)time_bidirectional*1E-9f;
+		const float bw_max = fmax(2.0f*fmax(bw_send, bw_receive), bw_bidirectional);
+		println("\r| PCIe   Bandwidth (        bidirectional)            (Gen"+to_string(bw_max>17.6f?4:bw_max>8.8f?3:bw_max>4.4f?2:1)+" x16)"+alignr(8u, to_string(bw_bidirectional, 2u))+" GB/s |");
 	}
-	const float bw_send = 4.0f*M*N/(float)time_send*1E-9f;
-	println("\r| PCIe   Bandwidth (send                 ) "+alignr(29u, to_string(bw_send, 2u))+" GB/s |");
-	print("| Benchmarking ...                                                            |");
-	for(uint i=0u; i<N_memory; i++) {
-		clock.start();
-		buffer.read_from_device();
-		time_receive = fmin(clock.stop(), time_receive);
-	}
-	const float bw_receive = 4.0f*M*N/(float)time_receive*1E-9f;
-	println("\r| PCIe   Bandwidth (   receive           ) "+alignr(29u, to_string(bw_receive, 2u))+" GB/s |");
-	print("| Benchmarking ...                                                            |");
-	for(uint i=0u; i<N_memory; i++) {
-		clock.start();
-		buffer.read_from_device(N*M/2u, N*M, false);
-		buffer.write_to_device(0u, N*M/2u, false);
-		buffer.finish_queue();
-		time_bidirectional = fmin(clock.stop(), time_bidirectional);
-	}
-	const float bw_bidirectional = 4.0f*M*N/(float)time_bidirectional*1E-9f;
-	const float bw_max = fmax(2.0f*fmax(bw_send, bw_receive), bw_bidirectional);
-	println("\r| PCIe   Bandwidth (        bidirectional)            (Gen"+to_string(bw_max>17.6f?4:bw_max>8.8f?3:bw_max>4.4f?2:1)+" x16)"+alignr(8u, to_string(bw_bidirectional, 2u))+" GB/s |");
 
 	println("|-----------------------------------------------------------------------------|");
 }

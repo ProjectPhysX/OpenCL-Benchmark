@@ -81,7 +81,7 @@ kernel void kernel_char(global float* data) {
 
 kernel void kernel_coalesced_write(global float* data) {
 	const uint n = get_global_id(0);
-	for(uint i=0u; i<def_M; i++) data[i*def_N+n] = 0.0f; // coalesced write
+	for(uint i=0u; i<def_M; i++) data[i*def_N+n] = (float)n; // coalesced write
 }
 kernel void kernel_coalesced_read(global float* data) {
 	const uint n = get_global_id(0);
@@ -91,7 +91,7 @@ kernel void kernel_coalesced_read(global float* data) {
 }
 kernel void kernel_misaligned_write(global float* data) {
 	const uint n = get_global_id(0);
-	for(uint i=0u; i<def_M; i++) data[n*def_M+i] = 0.0f; // misaligned write
+	for(uint i=0u; i<def_M; i++) data[n*def_M+i] = (float)n; // misaligned write
 }
 kernel void kernel_misaligned_read(global float* data) {
 	const uint n = get_global_id(0);
