@@ -300,6 +300,7 @@ template<typename T> class Memory {
 private:
 	ulong N = 0ull; // buffer length
 	uint d = 1u; // buffer dimensions
+	ulong host_alignment; // host buffer alignment
 	bool host_buffer_exists = false;
 	bool device_buffer_exists = false;
 	bool external_host_buffer = false; // Memory object has been created with an externally supplied host buffer/pointer
@@ -318,11 +319,12 @@ private:
 	inline void allocate_host_buffer(Device& device, const bool allocate_host, const bool allow_zero_copy) {
 		if(allocate_host) {
 			if(allow_zero_copy&&device.info.uses_ram) {
-				host_buffer_unaligned = new T[N*(ulong)d+4160ull/sizeof(T)]; // over-allocate by (4096+64) Bytes
-				host_buffer = (T*)((((ulong)host_buffer_unaligned+4095ull)/4096ull)*4096ull); // host_buffer must be aligned to 4096 Bytes for CL_MEM_USE_HOST_PTR
+				host_alignment = 4096; // host_buffer must be aligned to 4096 Bytes for CL_MEM_USE_HOST_PTR
 			} else {
-				host_buffer = new T[N*(ulong)d];
+				host_alignment = 64; // modern CPUs require stricter alignment for PCIe transfers 
 			}
+			host_buffer_unaligned = new T[N*(ulong)d+(host_alignment+64ull)/sizeof(T)]; // over-allocate 
+			host_buffer = (T*)((((ulong)host_buffer_unaligned+(host_alignment-1))/host_alignment)*host_alignment);
 			initialize_auxiliary_pointers();
 			host_buffer_exists = true;
 		}
