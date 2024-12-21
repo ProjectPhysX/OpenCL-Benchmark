@@ -1,3 +1,5 @@
 bin/
+build/
 .vs/
+.vscode/
 OpenCL-Benchmark.vcxproj.user
