@@ -44,12 +44,50 @@ Works with any GPU in Windows, Linux, macOS and Android.
   bin/OpenCL-Benchmark
   ```
 
+### Cross Compile
+- Edit Makefile for CROSS_COMPILE, CXX_FLAGS, LD_FLAGS for compile tools and target opencl so file and header file.
+  or you can export them before run make.
+- Compile and run
+  ```
+  make
+  ```
+- Copy target binary file to target board and run it like above
+
 ### Run only for a specified list of devices
 - call `bin\OpenCL-Benchmark.exe 0 2 5` (Windows) or `bin/OpenCL-Benchmark 0 2 5` (Linux/macOS) with the number(s) being the device IDs to be benchmarked
 
 
 
 ## Examples
+```
+|----------------.------------------------------------------------------------|
+| Device ID    0 | Mali-G78AE r0p1                                            |
+|----------------'------------------------------------------------------------|
+|----------------.------------------------------------------------------------|
+| Device ID      | 0                                                          |
+| Device Name    | Mali-G78AE r0p1                                            |
+| Device Vendor  | ARM                                                        |
+| Device Driver  | 3.0 (Linux)                                                |
+| OpenCL Version | OpenCL C 3.0                                               |
+| Compute Units  | 2 at 800 MHz (16 cores, 0.026 TFLOPs/s)                    |
+| Memory, Cache  | 6975 MB RAM, 256 KB global / 32 KB local                   |
+| Buffer Limits  | 4095 MB global, 4193792 KB constant                        |
+|----------------'------------------------------------------------------------|
+| Info: OpenCL C code successfully compiled.                                  |
+| FP64  compute                                          not supported        |
+| FP32  compute                                         0.051 TFLOPs/s ( 2x ) |
+| FP16  compute                                         0.102 TFLOPs/s ( 4x ) |
+| INT64 compute                                         0.006  TIOPs/s (1/4 ) |
+| INT32 compute                                         0.025  TIOPs/s ( 1x ) |
+| INT16 compute                                         0.050  TIOPs/s ( 2x ) |
+| INT8  compute                                         0.101  TIOPs/s ( 4x ) |
+| Memory Bandwidth ( coalesced read      )                         11.67 GB/s |
+| Memory Bandwidth ( coalesced      write)                         12.36 GB/s |
+| Memory Bandwidth (misaligned read      )                          5.79 GB/s |
+| Memory Bandwidth (misaligned      write)                          5.68 GB/s |
+|-----------------------------------------------------------------------------|
+```
+
 ```
 |----------------.------------------------------------------------------------|
 | Device ID      | 0                                                          |
