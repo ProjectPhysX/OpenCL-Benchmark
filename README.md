@@ -44,6 +44,15 @@ Works with any GPU in Windows, Linux, macOS and Android.
   bin/OpenCL-Benchmark
   ```
 
+### Cross Compile
+- Edit Makefile for CROSS_COMPILE, CXX_FLAGS, LD_FLAGS for compile tools and target opencl so file and header file.
+  or you can export them before run make.
+- Compile and run
+  ```
+  make
+  ```
+- Copy target binary file to target board and run it like above
+
 ### Run only for a specified list of devices
 - call `bin\OpenCL-Benchmark.exe 0 2 5` (Windows) or `bin/OpenCL-Benchmark 0 2 5` (Linux/macOS) with the number(s) being the device IDs to be benchmarked
 
