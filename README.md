@@ -7,7 +7,7 @@ Works with any GPU in Windows, Linux, macOS and Android.
 
 
 ## Measurements
-- compute performance (`FP64`, `FP32`, `FP16`, `INT64`, `INT32`, `INT16`, `INT8`)
+- compute performance (`FP64` (scalar), `FP32` (scalar), `FP16` (half2), `INT64` (scalar), `INT32` (scalar), `INT16` (short2), `INT8` (dp4a))
   - closest possible fraction/multiplicator of `measured compute performance` divided by `reported theoretical FP32 performance` is shown in `(round brackets)`
     - for example when OpenCL reports `19.492` TFLOPs/s theoretical FP32, and the benchmark measures `9.512` TFLOPs/s for FP64, the ratio of `(measured FP64)/(theoretical FP32) = 9.512/19.492 = 1/2.05` is rounded to the next possible value of `1/2` and reported as such
     - these ratios for any GPU/CPU architecture can only be either `1/64`, `1/32`, `1/24`, `1/16`, `1/12`, `1/8`, `1/4`, `1/3`, `1/2`, `2/3`, `1x`, `2x`, `4x`, `8x`, `16x`, `32x`, `64x`, and nothing in between
@@ -51,340 +51,162 @@ Works with any GPU in Windows, Linux, macOS and Android.
 
 ## Examples
 ```
-.-----------------------------------------------------------------------------.
-|----------------.------------------------------------------------------------|
-| Device ID    0 | NVIDIA A100-PCIE-40GB                                      |
-| Device ID    1 | NVIDIA GeForce RTX 2080 Ti                                 |
-| Device ID    2 | NVIDIA GeForce RTX 2080 Ti                                 |
-| Device ID    3 | NVIDIA GeForce RTX 2080 Ti                                 |
-| Device ID    4 | NVIDIA GeForce RTX 2080 Ti                                 |
-| Device ID    5 | NVIDIA GeForce RTX 2080 Ti                                 |
-| Device ID    6 | NVIDIA GeForce RTX 2080 Ti                                 |
-| Device ID    7 | NVIDIA GeForce RTX 2080 Ti                                 |
-|----------------'------------------------------------------------------------|
 |----------------.------------------------------------------------------------|
 | Device ID      | 0                                                          |
-| Device Name    | NVIDIA A100-PCIE-40GB                                      |
+| Device Name    | NVIDIA H100 80GB HBM3                                      |
 | Device Vendor  | NVIDIA Corporation                                         |
-| Device Driver  | 525.89.02                                                  |
+| Device Driver  | 565.57.01 (Linux)                                          |
 | OpenCL Version | OpenCL C 1.2                                               |
-| Compute Units  | 108 at 1410 MHz (6912 cores, 19.492 TFLOPs/s)              |
-| Memory, Cache  | 40513 MB, 3024 KB global / 48 KB local                     |
-| Buffer Limits  | 10128 MB global, 64 KB constant                            |
+| Compute Units  | 132 at 1980 MHz (16896 cores, 66.908 TFLOPs/s)             |
+| Memory, Cache  | 81105 MB VRAM, 4224 KB global / 48 KB local                |
+| Buffer Limits  | 20276 MB global, 64 KB constant                            |
 |----------------'------------------------------------------------------------|
 | Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                         9.512 TFLOPs/s (1/2 ) |
-| FP32  compute                                        19.283 TFLOPs/s ( 1x ) |
-| FP16  compute                                          not supported        |
-| INT64 compute                                         2.664  TIOPs/s (1/8 ) |
-| INT32 compute                                        19.245  TIOPs/s ( 1x ) |
-| INT16 compute                                        15.397  TIOPs/s (2/3 ) |
-| INT8  compute                                        18.052  TIOPs/s ( 1x ) |
-| Memory Bandwidth ( coalesced read      )                       1350.39 GB/s |
-| Memory Bandwidth ( coalesced      write)                       1503.39 GB/s |
-| Memory Bandwidth (misaligned read      )                       1226.41 GB/s |
-| Memory Bandwidth (misaligned      write)                        210.83 GB/s |
-| PCIe   Bandwidth (send                 )                         22.06 GB/s |
-| PCIe   Bandwidth (   receive           )                         21.16 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)    8.77 GB/s |
+| FP64  compute                                        31.184 TFLOPs/s (1/2 ) |
+| FP32  compute                                        62.908 TFLOPs/s ( 1x ) |
+| FP16  compute                                       123.749 TFLOPs/s ( 2x ) |
+| INT64 compute                                         3.227  TIOPs/s (1/24) |
+| INT32 compute                                        32.946  TIOPs/s (1/2 ) |
+| INT16 compute                                        30.901  TIOPs/s (1/2 ) |
+| INT8  compute                                       103.204  TIOPs/s ( 2x ) |
+| Memory Bandwidth ( coalesced read      )                       3025.53 GB/s |
+| Memory Bandwidth ( coalesced      write)                       3055.98 GB/s |
+| Memory Bandwidth (misaligned read      )                       2102.44 GB/s |
+| Memory Bandwidth (misaligned      write)                        314.25 GB/s |
+| PCIe   Bandwidth (send                 )                         10.53 GB/s |
+| PCIe   Bandwidth (   receive           )                         11.47 GB/s |
+| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   10.91 GB/s |
 |-----------------------------------------------------------------------------|
-|----------------.------------------------------------------------------------|
-| Device ID      | 1                                                          |
-| Device Name    | NVIDIA GeForce RTX 2080 Ti                                 |
-| Device Vendor  | NVIDIA Corporation                                         |
-| Device Driver  | 525.89.02                                                  |
-| OpenCL Version | OpenCL C 1.2                                               |
-| Compute Units  | 68 at 1545 MHz (4352 cores, 13.448 TFLOPs/s)               |
-| Memory, Cache  | 11011 MB, 2176 KB global / 48 KB local                     |
-| Buffer Limits  | 2752 MB global, 64 KB constant                             |
-|----------------'------------------------------------------------------------|
-| Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                         0.507 TFLOPs/s (1/24) |
-| FP32  compute                                        16.450 TFLOPs/s ( 1x ) |
-| FP16  compute                                          not supported        |
-| INT64 compute                                         3.524  TIOPs/s (1/4 ) |
-| INT32 compute                                        16.265  TIOPs/s ( 1x ) |
-| INT16 compute                                        12.897  TIOPs/s ( 1x ) |
-| INT8  compute                                        10.158  TIOPs/s (2/3 ) |
-| Memory Bandwidth ( coalesced read      )                        533.08 GB/s |
-| Memory Bandwidth ( coalesced      write)                        550.67 GB/s |
-| Memory Bandwidth (misaligned read      )                        533.38 GB/s |
-| Memory Bandwidth (misaligned      write)                        156.57 GB/s |
-| PCIe   Bandwidth (send                 )                         12.87 GB/s |
-| PCIe   Bandwidth (   receive           )                         12.86 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)    6.35 GB/s |
-|-----------------------------------------------------------------------------|
-|-----------------------------------------------------------------------------|
-| Done. Press Enter to exit.                                                  |
-'-----------------------------------------------------------------------------'
 ```
 ```
-.-----------------------------------------------------------------------------.
-|----------------.------------------------------------------------------------|
-| Device ID    0 | gfx906:sramecc+:xnack-                                     |
-| Device ID    1 | gfx906:sramecc+:xnack-                                     |
-| Device ID    2 | gfx906:sramecc+:xnack-                                     |
-| Device ID    3 | gfx906:sramecc+:xnack-                                     |
-| Device ID    4 | gfx906:sramecc+:xnack-                                     |
-| Device ID    5 | gfx906:sramecc+:xnack-                                     |
-| Device ID    6 | gfx90a:sramecc+:xnack-                                     |
-| Device ID    7 | gfx906:sramecc+:xnack-                                     |
-|----------------'------------------------------------------------------------|
-|----------------.------------------------------------------------------------|
-| Device ID      | 6                                                          |
-| Device Name    | gfx90a:sramecc+:xnack-                                     |
-| Device Vendor  | Advanced Micro Devices, Inc.                               |
-| Device Driver  | 3513.0 (HSA1.1,LC)                                         |
-| OpenCL Version | OpenCL C 2.0                                               |
-| Compute Units  | 104 at 1700 MHz (6656 cores, 22.630 TFLOPs/s)              |
-| Memory, Cache  | 65520 MB, 16 KB global / 64 KB local                       |
-| Buffer Limits  | 55692 MB global, 57028608 KB constant                      |
-|----------------'------------------------------------------------------------|
-| Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                        17.356 TFLOPs/s (2/3 ) |
-| FP32  compute                                        19.995 TFLOPs/s ( 1x ) |
-| FP16  compute                                        39.680 TFLOPs/s ( 2x ) |
-| INT64 compute                                         1.511  TIOPs/s (1/16) |
-| INT32 compute                                        18.441  TIOPs/s (2/3 ) |
-| INT16 compute                                        19.679  TIOPs/s ( 1x ) |
-| INT8  compute                                        13.294  TIOPs/s (2/3 ) |
-| Memory Bandwidth ( coalesced read      )                        967.34 GB/s |
-| Memory Bandwidth ( coalesced      write)                        979.27 GB/s |
-| Memory Bandwidth (misaligned read      )                       1302.28 GB/s |
-| Memory Bandwidth (misaligned      write)                        634.80 GB/s |
-| PCIe   Bandwidth (send                 )                         17.66 GB/s |
-| PCIe   Bandwidth (   receive           )                         17.60 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   17.30 GB/s |
-|-----------------------------------------------------------------------------|
-|----------------.------------------------------------------------------------|
-| Device ID      | 7                                                          |
-| Device Name    | gfx906:sramecc+:xnack-                                     |
-| Device Vendor  | Advanced Micro Devices, Inc.                               |
-| Device Driver  | 3513.0 (HSA1.1,LC)                                         |
-| OpenCL Version | OpenCL C 2.0                                               |
-| Compute Units  | 60 at 1801 MHz (3840 cores, 13.832 TFLOPs/s)               |
-| Memory, Cache  | 16368 MB, 16 KB global / 64 KB local                       |
-| Buffer Limits  | 13912 MB global, 14246707 KB constant                      |
-|----------------'------------------------------------------------------------|
-| Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                         3.130 TFLOPs/s (1/4 ) |
-| FP32  compute                                        12.440 TFLOPs/s ( 1x ) |
-| FP16  compute                                        24.593 TFLOPs/s ( 2x ) |
-| INT64 compute                                         0.809  TIOPs/s (1/16) |
-| INT32 compute                                         6.273  TIOPs/s (1/2 ) |
-| INT16 compute                                        12.488  TIOPs/s ( 1x ) |
-| INT8  compute                                         8.314  TIOPs/s (2/3 ) |
-| Memory Bandwidth ( coalesced read      )                        693.40 GB/s |
-| Memory Bandwidth ( coalesced      write)                        654.52 GB/s |
-| Memory Bandwidth (misaligned read      )                        805.20 GB/s |
-| Memory Bandwidth (misaligned      write)                        400.12 GB/s |
-| PCIe   Bandwidth (send                 )                         10.36 GB/s |
-| PCIe   Bandwidth (   receive           )                         10.28 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   10.32 GB/s |
-|-----------------------------------------------------------------------------|
-|-----------------------------------------------------------------------------|
-| Done. Press Enter to exit.                                                  |
-'-----------------------------------------------------------------------------'
-```
-```
-.-----------------------------------------------------------------------------.
-|----------------.------------------------------------------------------------|
-| Device ID    0 | Intel(R) FPGA Emulation Device                             |
-| Device ID    1 | Intel(R) Xeon(R) Platinum 8480+                            |
-| Device ID    2 | Intel(R) Data Center GPU Max 1100                          |
-| Device ID    3 | Intel(R) Data Center GPU Max 1100                          |
-| Device ID    4 | Intel(R) Data Center GPU Max 1100                          |
-| Device ID    5 | Intel(R) Data Center GPU Max 1100                          |
-|----------------'------------------------------------------------------------|
 |----------------.------------------------------------------------------------|
 | Device ID      | 2                                                          |
-| Device Name    | Intel(R) Data Center GPU Max 1100                          |
-| Device Vendor  | Intel(R) Corporation                                       |
-| Device Driver  | 23.17.26241.33                                             |
-| OpenCL Version | OpenCL C 1.2                                               |
-| Compute Units  | 448 at 1550 MHz (7168 cores, 22.221 TFLOPs/s)              |
-| Memory, Cache  | 46679 MB, 196608 KB global / 128 KB local                  |
-| Buffer Limits  | 46679 MB global, 47799500 KB constant                      |
+| Device Name    | AMD Instinct MI210                                         |
+| Device Vendor  | Advanced Micro Devices, Inc.                               |
+| Device Driver  | 3625.0 (HSA1.1,LC) (Linux)                                 |
+| OpenCL Version | OpenCL C 2.0                                               |
+| Compute Units  | 104 at 1700 MHz (6656 cores, 22.630 TFLOPs/s)              |
+| Memory, Cache  | 65520 MB VRAM, 16 KB global / 64 KB local                  |
+| Buffer Limits  | 65520 MB global, 67092480 KB constant                      |
 |----------------'------------------------------------------------------------|
 | Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                        16.314 TFLOPs/s ( 1x ) |
-| FP32  compute                                        21.932 TFLOPs/s ( 2x ) |
-| FP16  compute                                        41.413 TFLOPs/s ( 4x ) |
-| INT64 compute                                         1.082  TIOPs/s (1/12) |
-| INT32 compute                                         7.028  TIOPs/s (2/3 ) |
-| INT16 compute                                        60.320  TIOPs/s ( 4x ) |
-| INT8  compute                                        38.822  TIOPs/s ( 4x ) |
-| Memory Bandwidth ( coalesced read      )                        739.91 GB/s |
-| Memory Bandwidth ( coalesced      write)                        888.49 GB/s |
-| Memory Bandwidth (misaligned read      )                        718.96 GB/s |
-| Memory Bandwidth (misaligned      write)                        319.63 GB/s |
-| PCIe   Bandwidth (send                 )                         25.42 GB/s |
-| PCIe   Bandwidth (   receive           )                         23.10 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   32.31 GB/s |
+| FP64  compute                                        17.681 TFLOPs/s (2/3 ) |
+| FP32  compute                                        20.007 TFLOPs/s ( 1x ) |
+| FP16  compute                                        39.594 TFLOPs/s ( 2x ) |
+| INT64 compute                                         1.515  TIOPs/s (1/16) |
+| INT32 compute                                         9.877  TIOPs/s (1/2 ) |
+| INT16 compute                                        19.532  TIOPs/s ( 1x ) |
+| INT8  compute                                        36.307  TIOPs/s ( 2x ) |
+| Memory Bandwidth ( coalesced read      )                        993.82 GB/s |
+| Memory Bandwidth ( coalesced      write)                        999.76 GB/s |
+| Memory Bandwidth (misaligned read      )                       1325.91 GB/s |
+| Memory Bandwidth (misaligned      write)                        635.20 GB/s |
+| PCIe   Bandwidth (send                 )                         28.72 GB/s |
+| PCIe   Bandwidth (   receive           )                         28.51 GB/s |
+| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   28.61 GB/s |
 |-----------------------------------------------------------------------------|
-|-----------------------------------------------------------------------------|
-| Done. Press Enter to exit.                                                  |
-'-----------------------------------------------------------------------------'
 ```
 ```
-.-----------------------------------------------------------------------------.
-|----------------.------------------------------------------------------------|
-| Device ID    0 | NVIDIA TITAN Xp                                            |
-| Device ID    1 | Tesla K40m                                                 |
-| Device ID    2 | Tesla K40m                                                 |
-| Device ID    3 | Tesla K40m                                                 |
-|----------------'------------------------------------------------------------|
-|----------------.------------------------------------------------------------|
-| Device ID      | 1                                                          |
-| Device Name    | Tesla K40m                                                 |
-| Device Vendor  | NVIDIA Corporation                                         |
-| Device Driver  | 470.103.01                                                 |
-| OpenCL Version | OpenCL C 1.2                                               |
-| Compute Units  | 15 at 745 MHz (2880 cores, 4.291 TFLOPs/s)                 |
-| Memory, Cache  | 11441 MB, 240 KB global / 48 KB local                      |
-| Buffer Limits  | 2860 MB global, 64 KB constant                             |
-|----------------'------------------------------------------------------------|
-| Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                         1.213 TFLOPs/s (1/4 ) |
-| FP32  compute                                         2.437 TFLOPs/s (1/2 ) |
-| FP16  compute                                          not supported        |
-| INT64 compute                                         0.618  TIOPs/s (1/8 ) |
-| INT32 compute                                         0.714  TIOPs/s (1/8 ) |
-| INT16 compute                                         0.689  TIOPs/s (1/8 ) |
-| INT8  compute                                         0.679  TIOPs/s (1/8 ) |
-| Memory Bandwidth ( coalesced read      )                        175.44 GB/s |
-| Memory Bandwidth ( coalesced      write)                        191.03 GB/s |
-| Memory Bandwidth (misaligned read      )                         41.45 GB/s |
-| Memory Bandwidth (misaligned      write)                         37.91 GB/s |
-| PCIe   Bandwidth (send                 )                          7.67 GB/s |
-| PCIe   Bandwidth (   receive           )                          4.35 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen3 x16)    5.79 GB/s |
-|-----------------------------------------------------------------------------|
-|-----------------------------------------------------------------------------|
-| Done. Press Enter to exit.                                                  |
-'-----------------------------------------------------------------------------'
-```
-```
-.-----------------------------------------------------------------------------.
-|----------------.------------------------------------------------------------|
-| Device ID    0 | NVIDIA TITAN Xp                                            |
-| Device ID    1 | Intel(R) UHD Graphics 630                                  |
-| Device ID    2 | Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz                   |
-|----------------'------------------------------------------------------------|
 |----------------.------------------------------------------------------------|
 | Device ID      | 0                                                          |
-| Device Name    | NVIDIA TITAN Xp                                            |
-| Device Vendor  | NVIDIA Corporation                                         |
-| Device Driver  | 531.18                                                     |
-| OpenCL Version | OpenCL C 1.2                                               |
-| Compute Units  | 30 at 1582 MHz (3840 cores, 12.150 TFLOPs/s)               |
-| Memory, Cache  | 12287 MB, 1440 KB global / 48 KB local                     |
-| Buffer Limits  | 3071 MB global, 64 KB constant                             |
+| Device Name    | Intel(R) Arc(TM) B580 Graphics                             |
+| Device Vendor  | Intel(R) Corporation                                       |
+| Device Driver  | 32.0.101.6559 (Windows)                                    |
+| OpenCL Version | OpenCL C 3.0                                               |
+| Compute Units  | 160 at 2850 MHz (2560 cores, 14.592 TFLOPs/s)              |
+| Memory, Cache  | 12187 MB VRAM, 18432 KB global / 128 KB local              |
+| Buffer Limits  | 11944 MB global, 12230900 KB constant                      |
 |----------------'------------------------------------------------------------|
 | Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                         0.441 TFLOPs/s (1/32) |
-| FP32  compute                                        12.880 TFLOPs/s ( 1x ) |
-| FP16  compute                                          not supported        |
-| INT64 compute                                         1.436  TIOPs/s (1/8 ) |
-| INT32 compute                                         4.001  TIOPs/s (1/3 ) |
-| INT16 compute                                        12.733  TIOPs/s ( 1x ) |
-| INT8  compute                                        13.148  TIOPs/s ( 1x ) |
-| Memory Bandwidth ( coalesced read      )                        415.77 GB/s |
-| Memory Bandwidth ( coalesced      write)                        475.51 GB/s |
-| Memory Bandwidth (misaligned read      )                        168.69 GB/s |
-| Memory Bandwidth (misaligned      write)                        104.66 GB/s |
-| PCIe   Bandwidth (send                 )                         11.40 GB/s |
-| PCIe   Bandwidth (   receive           )                         11.06 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   11.22 GB/s |
+| FP64  compute                                         0.896 TFLOPs/s (1/16) |
+| FP32  compute                                        14.249 TFLOPs/s ( 1x ) |
+| FP16  compute                                        26.547 TFLOPs/s ( 2x ) |
+| INT64 compute                                         0.636  TIOPs/s (1/24) |
+| INT32 compute                                         4.556  TIOPs/s (1/3 ) |
+| INT16 compute                                        37.082  TIOPs/s ( 2x ) |
+| INT8  compute                                        48.668  TIOPs/s ( 4x ) |
+| Memory Bandwidth ( coalesced read      )                        574.09 GB/s |
+| Memory Bandwidth ( coalesced      write)                        468.07 GB/s |
+| Memory Bandwidth (misaligned read      )                        796.23 GB/s |
+| Memory Bandwidth (misaligned      write)                        383.15 GB/s |
+| PCIe   Bandwidth (send                 )                          4.99 GB/s |
+| PCIe   Bandwidth (   receive           )                          4.87 GB/s |
+| PCIe   Bandwidth (        bidirectional)            (Gen3 x16)    5.11 GB/s |
 |-----------------------------------------------------------------------------|
+|----------------.------------------------------------------------------------|
+```
+```
+|----------------.------------------------------------------------------------|
+| Device ID      | 0                                                          |
+| Device Name    | AMD EPYC 9554 64-Core Processor                            |
+| Device Vendor  | Intel(R) Corporation                                       |
+| Device Driver  | 2024.18.10.0.08_160000 (Linux)                             |
+| OpenCL Version | OpenCL C 3.0                                               |
+| Compute Units  | 128 at 0 MHz (64 cores, 0.000 TFLOPs/s)                    |
+| Memory, Cache  | 386363 MB RAM, 1024 KB global / 256 KB local               |
+| Buffer Limits  | 386363 MB global, 128 KB constant                          |
+|----------------'------------------------------------------------------------|
+| Info: OpenCL C code successfully compiled.                                  |
+| FP64  compute                                         3.739 TFLOPs/s (1/64) |
+| FP32  compute                                         3.842 TFLOPs/s (1/64) |
+| FP16  compute                                         0.863 TFLOPs/s (1/64) |
+| INT64 compute                                         1.506  TIOPs/s (1/64) |
+| INT32 compute                                         4.240  TIOPs/s (1/64) |
+| INT16 compute                                         8.592  TIOPs/s (1/64) |
+| INT8  compute                                         2.774  TIOPs/s (1/64) |
+| Memory Bandwidth ( coalesced read      )                        391.09 GB/s |
+| Memory Bandwidth ( coalesced      write)                        167.26 GB/s |
+| Memory Bandwidth (misaligned read      )                        248.65 GB/s |
+| Memory Bandwidth (misaligned      write)                        156.18 GB/s |
+|-----------------------------------------------------------------------------|
+```
+```
 |----------------.------------------------------------------------------------|
 | Device ID      | 1                                                          |
 | Device Name    | Intel(R) UHD Graphics 630                                  |
 | Device Vendor  | Intel(R) Corporation                                       |
-| Device Driver  | 31.0.101.2114                                              |
-| OpenCL Version | OpenCL C 1.2                                               |
+| Device Driver  | 31.0.101.2130 (Windows)                                    |
+| OpenCL Version | OpenCL C 3.0                                               |
 | Compute Units  | 24 at 1200 MHz (192 cores, 0.461 TFLOPs/s)                 |
-| Memory, Cache  | 6500 MB, 768 KB global / 64 KB local                       |
+| Memory, Cache  | 6500 MB RAM, 768 KB global / 64 KB local                   |
 | Buffer Limits  | 3250 MB global, 3328048 KB constant                        |
 |----------------'------------------------------------------------------------|
 | Info: OpenCL C code successfully compiled.                                  |
 | FP64  compute                                         0.112 TFLOPs/s (1/4 ) |
-| FP32  compute                                         0.454 TFLOPs/s ( 1x ) |
-| FP16  compute                                         0.781 TFLOPs/s ( 2x ) |
+| FP32  compute                                         0.437 TFLOPs/s ( 1x ) |
+| FP16  compute                                         0.801 TFLOPs/s ( 2x ) |
 | INT64 compute                                         0.016  TIOPs/s (1/32) |
-| INT32 compute                                         0.153  TIOPs/s (1/3 ) |
+| INT32 compute                                         0.149  TIOPs/s (1/3 ) |
 | INT16 compute                                         0.863  TIOPs/s ( 2x ) |
-| INT8  compute                                         0.151  TIOPs/s (1/3 ) |
-| Memory Bandwidth ( coalesced read      )                         20.14 GB/s |
-| Memory Bandwidth ( coalesced      write)                         22.94 GB/s |
-| Memory Bandwidth (misaligned read      )                         34.83 GB/s |
-| Memory Bandwidth (misaligned      write)                         12.64 GB/s |
-| PCIe   Bandwidth (send                 )                         14.46 GB/s |
-| PCIe   Bandwidth (   receive           )                         14.48 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)    9.38 GB/s |
+| INT8  compute                                         0.213  TIOPs/s (1/2 ) |
+| Memory Bandwidth ( coalesced read      )                         20.98 GB/s |
+| Memory Bandwidth ( coalesced      write)                         25.18 GB/s |
+| Memory Bandwidth (misaligned read      )                         35.16 GB/s |
+| Memory Bandwidth (misaligned      write)                         16.18 GB/s |
 |-----------------------------------------------------------------------------|
+```
+```
 |----------------.------------------------------------------------------------|
 | Device ID      | 2                                                          |
 | Device Name    | Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz                   |
 | Device Vendor  | Intel(R) Corporation                                       |
-| Device Driver  | 2022.14.11.0.01_160000.xmain-hotfix                        |
+| Device Driver  | 2024.17.3.0.08_160000 (Windows)                            |
 | OpenCL Version | OpenCL C 3.0                                               |
 | Compute Units  | 12 at 3700 MHz (6 cores, 0.710 TFLOPs/s)                   |
-| Memory, Cache  | 16250 MB, 256 KB global / 32 KB local                      |
-| Buffer Limits  | 8125 MB global, 128 KB constant                            |
+| Memory, Cache  | 16250 MB RAM, 256 KB global / 32 KB local                  |
+| Buffer Limits  | 16250 MB global, 128 KB constant                           |
 |----------------'------------------------------------------------------------|
 | Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                         0.179 TFLOPs/s (1/4 ) |
-| FP32  compute                                         0.176 TFLOPs/s (1/4 ) |
+| FP64  compute                                         0.151 TFLOPs/s (1/4 ) |
+| FP32  compute                                         0.158 TFLOPs/s (1/4 ) |
 | FP16  compute                                          not supported        |
-| INT64 compute                                         0.053  TIOPs/s (1/12) |
-| INT32 compute                                         0.061  TIOPs/s (1/12) |
-| INT16 compute                                         0.222  TIOPs/s (1/3 ) |
-| INT8  compute                                         0.242  TIOPs/s (1/3 ) |
-| Memory Bandwidth ( coalesced read      )                         22.74 GB/s |
-| Memory Bandwidth ( coalesced      write)                         11.16 GB/s |
-| Memory Bandwidth (misaligned read      )                         41.23 GB/s |
-| Memory Bandwidth (misaligned      write)                         14.21 GB/s |
-| PCIe   Bandwidth (send                 )                         15.45 GB/s |
-| PCIe   Bandwidth (   receive           )                         14.96 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   15.02 GB/s |
+| INT64 compute                                         0.042  TIOPs/s (1/16) |
+| INT32 compute                                         0.063  TIOPs/s (1/12) |
+| INT16 compute                                         0.224  TIOPs/s (1/3 ) |
+| INT8  compute                                         0.059  TIOPs/s (1/12) |
+| Memory Bandwidth ( coalesced read      )                         16.92 GB/s |
+| Memory Bandwidth ( coalesced      write)                          8.08 GB/s |
+| Memory Bandwidth (misaligned read      )                         40.02 GB/s |
+| Memory Bandwidth (misaligned      write)                         13.69 GB/s |
 |-----------------------------------------------------------------------------|
-|-----------------------------------------------------------------------------|
-| Done. Press Enter to exit.                                                  |
-'-----------------------------------------------------------------------------'
-```
-```
-.-----------------------------------------------------------------------------.
-|----------------.------------------------------------------------------------|
-| Device ID    0 | Intel(R) Arc(TM) A750 Graphics                             |
-|----------------'------------------------------------------------------------|
-|----------------.------------------------------------------------------------|
-| Device ID      | 0                                                          |
-| Device Name    | Intel(R) Arc(TM) A750 Graphics                             |
-| Device Vendor  | Intel(R) Corporation                                       |
-| Device Driver  | 23.05.25593.18                                             |
-| OpenCL Version | OpenCL C 1.2                                               |
-| Compute Units  | 448 at 2400 MHz (3584 cores, 17.203 TFLOPs/s)              |
-| Memory, Cache  | 8127 MB, 512 KB global / 64 KB local                       |
-| Buffer Limits  | 3860 MB global, 3953458 KB constant                        |
-|----------------'------------------------------------------------------------|
-| Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                          not supported        |
-| FP32  compute                                        10.254 TFLOPs/s (2/3 ) |
-| FP16  compute                                        15.629 TFLOPs/s ( 1x ) |
-| INT64 compute                                         1.032  TIOPs/s (1/16) |
-| INT32 compute                                         3.896  TIOPs/s (1/4 ) |
-| INT16 compute                                        25.614  TIOPs/s ( 1x ) |
-| INT8  compute                                         9.434  TIOPs/s (1/2 ) |
-| Memory Bandwidth ( coalesced read      )                        198.56 GB/s |
-| Memory Bandwidth ( coalesced      write)                        407.12 GB/s |
-| Memory Bandwidth (misaligned read      )                        384.15 GB/s |
-| Memory Bandwidth (misaligned      write)                        285.33 GB/s |
-| PCIe   Bandwidth (send                 )                          1.33 GB/s |
-| PCIe   Bandwidth (   receive           )                          1.28 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen1 x16)    1.34 GB/s |
-|-----------------------------------------------------------------------------|
-|-----------------------------------------------------------------------------|
-| Done. Press Enter to exit.                                                  |
-'-----------------------------------------------------------------------------'
 ```
