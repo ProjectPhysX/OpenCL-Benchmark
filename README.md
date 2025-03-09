@@ -56,7 +56,7 @@ Works with any GPU in Windows, Linux, macOS and Android.
 | Device Name    | NVIDIA H100 80GB HBM3                                      |
 | Device Vendor  | NVIDIA Corporation                                         |
 | Device Driver  | 565.57.01 (Linux)                                          |
-| OpenCL Version | OpenCL C 1.2                                               |
+| OpenCL Version | OpenCL C 3.0                                               |
 | Compute Units  | 132 at 1980 MHz (16896 cores, 66.908 TFLOPs/s)             |
 | Memory, Cache  | 81105 MB VRAM, 4224 KB global / 48 KB local                |
 | Buffer Limits  | 20276 MB global, 64 KB constant                            |
@@ -80,30 +80,30 @@ Works with any GPU in Windows, Linux, macOS and Android.
 ```
 ```
 |----------------.------------------------------------------------------------|
-| Device ID      | 2                                                          |
-| Device Name    | AMD Instinct MI210                                         |
+| Device ID      | 0                                                          |
+| Device Name    | AMD Instinct MI300X                                        |
 | Device Vendor  | Advanced Micro Devices, Inc.                               |
-| Device Driver  | 3625.0 (HSA1.1,LC) (Linux)                                 |
+| Device Driver  | 3635.0 (HSA1.1,LC) (Linux)                                 |
 | OpenCL Version | OpenCL C 2.0                                               |
-| Compute Units  | 104 at 1700 MHz (6656 cores, 22.630 TFLOPs/s)              |
-| Memory, Cache  | 65520 MB VRAM, 16 KB global / 64 KB local                  |
-| Buffer Limits  | 65520 MB global, 67092480 KB constant                      |
+| Compute Units  | 304 at 2100 MHz (19456 cores, 81.715 TFLOPs/s)             |
+| Memory, Cache  | 196592 MB VRAM, 32 KB global / 64 KB local                 |
+| Buffer Limits  | 196592 MB global, 201310208 KB constant                    |
 |----------------'------------------------------------------------------------|
 | Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                        17.681 TFLOPs/s (2/3 ) |
-| FP32  compute                                        20.007 TFLOPs/s ( 1x ) |
-| FP16  compute                                        39.594 TFLOPs/s ( 2x ) |
-| INT64 compute                                         1.515  TIOPs/s (1/16) |
-| INT32 compute                                         9.877  TIOPs/s (1/2 ) |
-| INT16 compute                                        19.532  TIOPs/s ( 1x ) |
-| INT8  compute                                        36.307  TIOPs/s ( 2x ) |
-| Memory Bandwidth ( coalesced read      )                        993.82 GB/s |
-| Memory Bandwidth ( coalesced      write)                        999.76 GB/s |
-| Memory Bandwidth (misaligned read      )                       1325.91 GB/s |
-| Memory Bandwidth (misaligned      write)                        635.20 GB/s |
-| PCIe   Bandwidth (send                 )                         28.72 GB/s |
-| PCIe   Bandwidth (   receive           )                         28.51 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   28.61 GB/s |
+| FP64  compute                                        54.944 TFLOPs/s (2/3 ) |
+| FP32  compute                                       130.000 TFLOPs/s ( 2x ) |
+| FP16  compute                                       141.320 TFLOPs/s ( 2x ) |
+| INT64 compute                                         3.666  TIOPs/s (1/24) |
+| INT32 compute                                        47.736  TIOPs/s (2/3 ) |
+| INT16 compute                                        69.022  TIOPs/s ( 1x ) |
+| INT8  compute                                       106.178  TIOPs/s ( 1x ) |
+| Memory Bandwidth ( coalesced read      )                       3756.64 GB/s |
+| Memory Bandwidth ( coalesced      write)                       4686.31 GB/s |
+| Memory Bandwidth (misaligned read      )                       3881.24 GB/s |
+| Memory Bandwidth (misaligned      write)                       2491.25 GB/s |
+| PCIe   Bandwidth (send                 )                         54.57 GB/s |
+| PCIe   Bandwidth (   receive           )                         55.79 GB/s |
+| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   55.21 GB/s |
 |-----------------------------------------------------------------------------|
 ```
 ```
