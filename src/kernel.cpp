@@ -10,6 +10,8 @@ int dp4a(const char4 a, const char4 b, const int c) { // 4-wide byte dot product
 	return c+dot(a, b); // dot_acc_sat(a, b, c); is slow
 )+"#elif __has_builtin(__builtin_amdgcn_sdot4)"+R( // use hardware-supported dp4a on some AMD GPUs
     return __builtin_amdgcn_sdot4(as_int(a), as_int(b), c, false);
+)+"#elif defined(cl_arm_integer_dot_product_accumulate_int8)"+R( // use hardware-supported dp4a on some ARM GPUs
+    return arm_dot_acc(a, b, c);
 )+"#else"+R( // fallback emulation (compilers will turn this into hardware-supported dp4a instruction if available)
 	return c+a.x*b.x+a.y*b.y+a.z*b.z+a.w*b.w;
 )+"#endif"+R(
