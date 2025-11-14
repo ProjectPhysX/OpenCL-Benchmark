@@ -17,8 +17,9 @@ string fraction(const float x) {
 }
 
 void benchmark_device(const Device_Info& device_info) {
-	const uint N = 4096u*4096u; // kernel range: N*M*sizeof(float) = 1GB memory allocation
 	const uint M = 16u; // coalescence size
+	const uint target_memory_mb = min(1024u, device_info.max_global_buffer); // use 1GB or device limit, whichever is smaller
+	const uint N = (target_memory_mb*1048576u)/(M*sizeof(float)); // calculate N based on available memory
 	const uint N_kernel = 256u; // iterations for kernel calls
 	const uint N_memory = 16u; // iterations for PCIe memory transfers
 
