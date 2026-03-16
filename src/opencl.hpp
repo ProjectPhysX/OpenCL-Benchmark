@@ -34,7 +34,7 @@ string("'-----------------------------------------------------------------------
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y g++ git make ocl-icd-libopencl1 ocl-icd-opencl-dev
 mkdir -p ~/amdgpu
-wget -P ~/amdgpu https://repo.radeon.com/amdgpu-install/30.20.1/ubuntu/noble/amdgpu-install_7.1.1.70101-1_all.deb
+wget -P ~/amdgpu https://repo.radeon.com/amdgpu-install/25.35/ubuntu/noble/amdgpu-install_7.2.70200-1_all.deb
 sudo apt install -y ~/amdgpu/amdgpu-install*.deb
 sudo amdgpu-install -y --usecase=graphics,rocm,opencl --opencl=rocr
 sudo usermod -a -G render,video $(whoami)
@@ -157,7 +157,7 @@ struct Device_Info {
 			if(is_gpu&&length(amd_device_name)>0u) name = amd_device_name; // for AMD GPUs, CL_DEVICE_NAME wrongly outputs chip codename, and CL_DEVICE_BOARD_NAME_AMD outputs actual device name
 		} else if(vendor_id==0x8086) { // Intel GPU/CPU
 			const uint intel_device_ip_version = (uint)cl_device.getInfo<CL_DEVICE_IP_VERSION_INTEL>()&0xFFFFC03Fu; // bits 22-31: major, bits 14-21: minor, bits 0-5: revision, https://github.com/openvinotoolkit/openvino/blob/master/src/plugins/intel_gpu/src/runtime/ocl/ocl_device.cpp#L150-L158
-			intel_compute_capability = 100000u*(intel_device_ip_version>>22)+100u*((intel_device_ip_version>>14)&0xFFu)+(intel_device_ip_version&0x3Fu); // for example 2000100 means compute capability 20.001.00
+			intel_compute_capability = 100000u*(intel_device_ip_version>>22)+100u*((intel_device_ip_version>>14)&0xFFu)+(intel_device_ip_version&0x3Fu); // for example 2000100 means compute capability 20.001.00, https://github.com/intel/compute-runtime/blob/master/third_party/aot_config_headers/platforms.h
 			const bool intel_16_cores_per_cu = (intel_compute_capability>=1206000u&&intel_compute_capability<1207000u)||(intel_compute_capability>=2000000u); // (PVC/Xe2/Xe3)
 			cores_per_cu = is_gpu ? (intel_16_cores_per_cu ? 16.0f : 8.0f) : 0.5f; // Intel GPUs have 16 cores/CU (PVC/Xe2/Xe3) or 8 cores/CU (Xe1), Intel CPUs (with HT) have 1/2 core/CU
 			if(is_gpu&&!uses_ram) { // fix wrong global memory capacity reporting for Intel dGPUs
