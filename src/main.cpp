@@ -17,8 +17,9 @@ string fraction(const float x) {
 }
 
 void benchmark_device(const Device_Info& device_info) {
-	const uint N = 4096u*4096u; // kernel range: N*M*sizeof(float) = 1GB memory allocation
+	const uint memory_allocation_size = min(1024u, device_info.max_global_buffer);
 	const uint M = 16u; // coalescence size
+	const uint N = memory_allocation_size*1048576u/(M*(uint)sizeof(float)); // kernel range: N*M*sizeof(float)
 	const uint N_kernel = 256u; // iterations for kernel calls
 	const uint N_memory = 16u; // iterations for PCIe memory transfers
 
@@ -45,9 +46,9 @@ void benchmark_device(const Device_Info& device_info) {
 			time_double = fmin(clock.stop(), time_double);
 		}
 		const float flops_double = 512.0f*(float)N/(float)time_double*1E-12f;
-		println("\r| FP64  compute "+alignr(45u, to_string(flops_double, 3u))+" TFLOPs/s "+fraction(100.0f*flops_double/device.info.tflops)+" |");
+		println("\r| FP64   Compute   (double, fma  ) "+alignr(26u, to_string(flops_double, 3u))+" TFLOPs/s "+fraction(100.0f*flops_double/device.info.tflops)+" |");
 	} else {
-		println("\r| FP64  compute                                          not supported        |");
+		println("\r| FP64   Compute   (double, fma  )                       not supported        |");
 	}
 
 	print("| Benchmarking ...                                                            |");
@@ -58,7 +59,7 @@ void benchmark_device(const Device_Info& device_info) {
 		time_float = fmin(clock.stop(), time_float);
 	}
 	const float flops_float = 2048.0f*(float)N/(float)time_float*1E-12f; //const float flops = 32.0f*2.0f*(float)sq(M)*N/(float)timef*1E-12f;
-	println("\r| FP32  compute "+alignr(45u, to_string(flops_float, 3u))+" TFLOPs/s "+fraction(100.0f*flops_float/device.info.tflops)+" |");
+	println("\r| FP32   Compute   (float , fma  ) "+alignr(26u, to_string(flops_float, 3u))+" TFLOPs/s "+fraction(100.0f*flops_float/device.info.tflops)+" |");
 
 	if(device.info.is_fp16_capable) {
 		print("| Benchmarking ...                                                            |");
@@ -69,9 +70,9 @@ void benchmark_device(const Device_Info& device_info) {
 			time_half = fmin(clock.stop(), time_half);
 		}
 		const float flops_half = 4096.0f*(float)N/(float)time_half*1E-12f;
-		println("\r| FP16  compute "+alignr(45u, to_string(flops_half, 3u))+" TFLOPs/s "+fraction(100.0f*flops_half/device.info.tflops)+" |");
+		println("\r| FP16   Compute   (half2 , fma  ) "+alignr(26u, to_string(flops_half, 3u))+" TFLOPs/s "+fraction(100.0f*flops_half/device.info.tflops)+" |");
 	} else {
-		println("\r| FP16  compute                                          not supported        |");
+		println("\r| FP16   Compute   (half2 , fma  )                       not supported        |");
 	}
 
 	print("| Benchmarking ...                                                            |");
@@ -82,7 +83,7 @@ void benchmark_device(const Device_Info& device_info) {
 		time_long = fmin(clock.stop(), time_long);
 	}
 	const float flops_long = 32.0f*(float)N/(float)time_long*1E-12f;
-	println("\r| INT64 compute "+alignr(45u, to_string(flops_long, 3u))+"  TIOPs/s "+fraction(100.0f*flops_long/device.info.tflops)+" |");
+	println("\r| INT64  Compute   (long  , a*b+c) "+alignr(26u, to_string(flops_long, 3u))+"  TIOPs/s "+fraction(100.0f*flops_long/device.info.tflops)+" |");
 
 	print("| Benchmarking ...                                                            |");
 	Kernel kernel_int(device, N, "kernel_int", buffer);
@@ -92,7 +93,7 @@ void benchmark_device(const Device_Info& device_info) {
 		time_int = fmin(clock.stop(), time_int);
 	}
 	const float flops_int = 2048.0f*(float)N/(float)time_int*1E-12f;
-	println("\r| INT32 compute "+alignr(45u, to_string(flops_int, 3u))+"  TIOPs/s "+fraction(100.0f*flops_int/device.info.tflops)+" |");
+	println("\r| INT32  Compute   (int   , a*b+c) "+alignr(26u, to_string(flops_int, 3u))+"  TIOPs/s "+fraction(100.0f*flops_int/device.info.tflops)+" |");
 
 	print("| Benchmarking ...                                                            |");
 	Kernel kernel_short(device, N, "kernel_short", buffer);
@@ -102,7 +103,7 @@ void benchmark_device(const Device_Info& device_info) {
 		time_short = fmin(clock.stop(), time_short);
 	}
 	const float flops_short = 1024.0f*(float)N/(float)time_short*1E-12f;
-	println("\r| INT16 compute "+alignr(45u, to_string(flops_short, 3u))+"  TIOPs/s "+fraction(100.0f*flops_short/device.info.tflops)+" |");
+	println("\r| INT16  Compute   (short2, a*b+c) "+alignr(26u, to_string(flops_short, 3u))+"  TIOPs/s "+fraction(100.0f*flops_short/device.info.tflops)+" |");
 
 	print("| Benchmarking ...                                                            |");
 	Kernel kernel_char(device, N, "kernel_char", buffer);
@@ -112,7 +113,7 @@ void benchmark_device(const Device_Info& device_info) {
 		time_char = fmin(clock.stop(), time_char);
 	}
 	const float flops_char = 1024.0f*(float)N/(float)time_char*1E-12f;
-	println("\r| INT8  compute "+alignr(45u, to_string(flops_char, 3u))+"  TIOPs/s "+fraction(100.0f*flops_char/device.info.tflops)+" |");
+	println("\r| INT8   Compute   (char4 , dp4a ) "+alignr(26u, to_string(flops_char, 3u))+"  TIOPs/s "+fraction(100.0f*flops_char/device.info.tflops)+" |");
 
 	print("| Benchmarking ...                                                            |");
 	Kernel kernel_coalesced_write(device, N, "kernel_coalesced_write" , buffer);
@@ -172,8 +173,9 @@ void benchmark_device(const Device_Info& device_info) {
 			time_bidirectional = fmin(clock.stop(), time_bidirectional);
 		}
 		const float bw_bidirectional = 4.0f*M*N/(float)time_bidirectional*1E-9f;
-		const float bw_max = fmax(2.0f*fmax(bw_send, bw_receive), bw_bidirectional);
-		println("\r| PCIe   Bandwidth (        bidirectional)            (Gen"+to_string(bw_max>17.6f?4:bw_max>8.8f?3:bw_max>4.4f?2:1)+" x16)"+alignr(8u, to_string(bw_bidirectional, 2u))+" GB/s |");
+		const float bw_max = fmax(fmax(bw_send, bw_receive), bw_bidirectional);
+		const uint gen = bw_max>140.8f ? 7u : bw_max>70.4f ? 6u : bw_max>35.2f ? 5u : bw_max>17.6f ? 4u : bw_max>8.8f ? 3u : bw_max>4.4f ? 2u : 1u;
+		println("\r| PCIe   Bandwidth (        bidirectional)            (Gen"+to_string(gen)+" x16)"+alignr(8u, to_string(bw_bidirectional, 2u))+" GB/s |");
 	}
 
 	println("|-----------------------------------------------------------------------------|");

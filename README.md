@@ -7,9 +7,17 @@ Works with any GPU in Windows, Linux, macOS and Android.
 
 
 ## Measurements
-- compute performance (`FP64` (scalar), `FP32` (scalar), `FP16` (half2), `INT64` (scalar), `INT32` (scalar), `INT16` (short2), `INT8` (dp4a))
+- compute performance
+  - benchmarked data types
+    - `FP64` (`double`, `fma`)
+    - `FP32` (`float`, `fma`)
+    - `FP16` (`half2`, `fma`)
+    - `INT64` (`long`, `a*b+c`)
+    - `INT32` (`int`, `a*b+c`)
+    - `INT16` (`short2`, `a*b+c`)
+    - `INT8` (`char4`, `dp4a`)
   - closest possible fraction/multiplicator of `measured compute performance` divided by `reported theoretical FP32 performance` is shown in `(round brackets)`
-    - for example when OpenCL reports `19.492` TFLOPs/s theoretical FP32, and the benchmark measures `9.512` TFLOPs/s for FP64, the ratio of `(measured FP64)/(theoretical FP32) = 9.512/19.492 = 1/2.05` is rounded to the next possible value of `1/2` and reported as such
+    - for example when OpenCL reports `19.492 TFLOPs/s` theoretical `FP32`, and the benchmark measures `9.512 TFLOPs/s` for `FP64`, the ratio of `(measured FP64)/(theoretical FP32) = 9.512/19.492 = 1/2.05` is rounded to the next possible value of `1/2` and reported as such
     - these ratios for any GPU/CPU architecture can only be either `1/64`, `1/32`, `1/24`, `1/16`, `1/12`, `1/8`, `1/4`, `1/3`, `1/2`, `2/3`, `1x`, `2x`, `4x`, `8x`, `16x`, `32x`, `64x`, and nothing in between
 - memory bandwidth (`coalesced`/`misaligned` `read`/`write`)
 - PCIe bandwidth (`send`/`receive`/`bidirectional`)
@@ -53,6 +61,34 @@ Works with any GPU in Windows, Linux, macOS and Android.
 ```
 |----------------.------------------------------------------------------------|
 | Device ID      | 0                                                          |
+| Device Name    | NVIDIA B300 SXM6 AC                                        |
+| Device Vendor  | NVIDIA Corporation                                         |
+| Device Driver  | 580.126.09 (Linux)                                         |
+| OpenCL Version | OpenCL C 3.0                                               |
+| Compute Units  | 148 at 2032 MHz (18944 cores, 76.988 TFLOPs/s)             |
+| Memory, Cache  | 274113 MB VRAM, 4736 KB global / 48 KB local               |
+| Buffer Limits  | 68528 MB global, 64 KB constant                            |
+|----------------'------------------------------------------------------------|
+| Info: OpenCL C code successfully compiled.                                  |
+| FP64   Compute   (double, fma  )                      1.184 TFLOPs/s (1/64) |
+| FP32   Compute   (float , fma  )                     71.452 TFLOPs/s ( 1x ) |
+| FP16   Compute   (half2 , fma  )                     75.201 TFLOPs/s ( 1x ) |
+| INT64  Compute   (long  , a*b+c)                      3.714  TIOPs/s (1/24) |
+| INT32  Compute   (int   , a*b+c)                     37.736  TIOPs/s (1/2 ) |
+| INT16  Compute   (short2, a*b+c)                     34.592  TIOPs/s (1/2 ) |
+| INT8   Compute   (char4 , dp4a )                    118.743  TIOPs/s ( 2x ) |
+| Memory Bandwidth ( coalesced read      )                       6543.01 GB/s |
+| Memory Bandwidth ( coalesced      write)                       6887.38 GB/s |
+| Memory Bandwidth (misaligned read      )                       2355.50 GB/s |
+| Memory Bandwidth (misaligned      write)                        969.95 GB/s |
+| PCIe   Bandwidth (send                 )                          9.86 GB/s |
+| PCIe   Bandwidth (   receive           )                          9.70 GB/s |
+| PCIe   Bandwidth (        bidirectional)            (Gen3 x16)    8.93 GB/s |
+|-----------------------------------------------------------------------------|
+```
+```
+|----------------.------------------------------------------------------------|
+| Device ID      | 0                                                          |
 | Device Name    | NVIDIA B200                                                |
 | Device Vendor  | NVIDIA Corporation                                         |
 | Device Driver  | 570.133.20 (Linux)                                         |
@@ -62,20 +98,20 @@ Works with any GPU in Windows, Linux, macOS and Android.
 | Buffer Limits  | 45660 MB global, 64 KB constant                            |
 |----------------'------------------------------------------------------------|
 | Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                        34.292 TFLOPs/s (1/2 ) |
-| FP32  compute                                        69.464 TFLOPs/s ( 1x ) |
-| FP16  compute                                        72.909 TFLOPs/s ( 1x ) |
-| INT64 compute                                         3.704  TIOPs/s (1/24) |
-| INT32 compute                                        36.508  TIOPs/s (1/2 ) |
-| INT16 compute                                        33.597  TIOPs/s (1/2 ) |
-| INT8  compute                                       117.962  TIOPs/s ( 2x ) |
+| FP64   Compute   (double, fma  )                     34.292 TFLOPs/s (1/2 ) |
+| FP32   Compute   (float , fma  )                     69.464 TFLOPs/s ( 1x ) |
+| FP16   Compute   (half2 , fma  )                     72.909 TFLOPs/s ( 1x ) |
+| INT64  Compute   (long  , a*b+c)                      3.704  TIOPs/s (1/24) |
+| INT32  Compute   (int   , a*b+c)                     36.508  TIOPs/s (1/2 ) |
+| INT16  Compute   (short2, a*b+c)                     33.597  TIOPs/s (1/2 ) |
+| INT8   Compute   (char4 , dp4a )                    117.962  TIOPs/s ( 2x ) |
 | Memory Bandwidth ( coalesced read      )                       6668.71 GB/s |
 | Memory Bandwidth ( coalesced      write)                       6502.72 GB/s |
 | Memory Bandwidth (misaligned read      )                       2280.05 GB/s |
 | Memory Bandwidth (misaligned      write)                        937.78 GB/s |
 | PCIe   Bandwidth (send                 )                         14.08 GB/s |
 | PCIe   Bandwidth (   receive           )                         13.82 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   11.39 GB/s |
+| PCIe   Bandwidth (        bidirectional)            (Gen3 x16)   11.39 GB/s |
 |-----------------------------------------------------------------------------|
 ```
 ```
@@ -90,20 +126,20 @@ Works with any GPU in Windows, Linux, macOS and Android.
 | Buffer Limits  | 46679 MB global, 47799500 KB constant                      |
 |----------------'------------------------------------------------------------|
 | Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                        15.929 TFLOPs/s (2/3 ) |
-| FP32  compute                                        21.934 TFLOPs/s ( 1x ) |
-| FP16  compute                                        41.497 TFLOPs/s ( 2x ) |
-| INT64 compute                                         1.083  TIOPs/s (1/24) |
-| INT32 compute                                         7.043  TIOPs/s (1/3 ) |
-| INT16 compute                                        60.469  TIOPs/s ( 2x ) |
-| INT8  compute                                        41.642  TIOPs/s ( 2x ) |
+| FP64   Compute   (double, fma  )                     15.929 TFLOPs/s (2/3 ) |
+| FP32   Compute   (float , fma  )                     21.934 TFLOPs/s ( 1x ) |
+| FP16   Compute   (half2 , fma  )                     41.497 TFLOPs/s ( 2x ) |
+| INT64  Compute   (long  , a*b+c)                      1.083  TIOPs/s (1/24) |
+| INT32  Compute   (int   , a*b+c)                      7.043  TIOPs/s (1/3 ) |
+| INT16  Compute   (short2, a*b+c)                     60.469  TIOPs/s ( 2x ) |
+| INT8   Compute   (char4 , dp4a )                     41.642  TIOPs/s ( 2x ) |
 | Memory Bandwidth ( coalesced read      )                        737.51 GB/s |
 | Memory Bandwidth ( coalesced      write)                        907.84 GB/s |
 | Memory Bandwidth (misaligned read      )                        716.65 GB/s |
 | Memory Bandwidth (misaligned      write)                        329.80 GB/s |
 | PCIe   Bandwidth (send                 )                         45.92 GB/s |
 | PCIe   Bandwidth (   receive           )                         35.89 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   40.21 GB/s |
+| PCIe   Bandwidth (        bidirectional)            (Gen5 x16)   40.21 GB/s |
 |-----------------------------------------------------------------------------|
 ```
 ```
@@ -118,20 +154,20 @@ Works with any GPU in Windows, Linux, macOS and Android.
 | Buffer Limits  | 294896 MB global, 301973504 KB constant                    |
 |----------------'------------------------------------------------------------|
 | Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                        62.858 TFLOPs/s (2/3 ) |
-| FP32  compute                                       138.172 TFLOPs/s ( 2x ) |
-| FP16  compute                                       143.453 TFLOPs/s ( 2x ) |
-| INT64 compute                                         7.078  TIOPs/s (1/12) |
-| INT32 compute                                        38.309  TIOPs/s (1/2 ) |
-| INT16 compute                                        89.761  TIOPs/s ( 1x ) |
-| INT8  compute                                       129.780  TIOPs/s ( 2x ) |
+| FP64   Compute   (double, fma  )                     62.858 TFLOPs/s (2/3 ) |
+| FP32   Compute   (float , fma  )                    138.172 TFLOPs/s ( 2x ) |
+| FP16   Compute   (half2 , fma  )                    143.453 TFLOPs/s ( 2x ) |
+| INT64  Compute   (long  , a*b+c)                      7.078  TIOPs/s (1/12) |
+| INT32  Compute   (int   , a*b+c)                     38.309  TIOPs/s (1/2 ) |
+| INT16  Compute   (short2, a*b+c)                     89.761  TIOPs/s ( 1x ) |
+| INT8   Compute   (char4 , dp4a )                    129.780  TIOPs/s ( 2x ) |
 | Memory Bandwidth ( coalesced read      )                       4903.01 GB/s |
 | Memory Bandwidth ( coalesced      write)                       5438.98 GB/s |
 | Memory Bandwidth (misaligned read      )                       5473.35 GB/s |
 | Memory Bandwidth (misaligned      write)                       3449.07 GB/s |
 | PCIe   Bandwidth (send                 )                         55.16 GB/s |
 | PCIe   Bandwidth (   receive           )                         54.76 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   55.00 GB/s |
+| PCIe   Bandwidth (        bidirectional)            (Gen5 x16)   55.00 GB/s |
 |-----------------------------------------------------------------------------|
 ```
 ```
@@ -146,20 +182,20 @@ Works with any GPU in Windows, Linux, macOS and Android.
 | Buffer Limits  | 3045 MB global, 64 KB constant                             |
 |----------------'------------------------------------------------------------|
 | Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                         0.440 TFLOPs/s (1/32) |
-| FP32  compute                                        13.041 TFLOPs/s ( 1x ) |
-| FP16  compute                                         0.218 TFLOPs/s (1/64) |
-| INT64 compute                                         1.437  TIOPs/s (1/8 ) |
-| INT32 compute                                         4.103  TIOPs/s (1/3 ) |
-| INT16 compute                                        10.115  TIOPs/s (2/3 ) |
-| INT8  compute                                        35.237  TIOPs/s ( 2x ) |
+| FP64   Compute   (double, fma  )                      0.440 TFLOPs/s (1/32) |
+| FP32   Compute   (float , fma  )                     13.041 TFLOPs/s ( 1x ) |
+| FP16   Compute   (half2 , fma  )                      0.218 TFLOPs/s (1/64) |
+| INT64  Compute   (long  , a*b+c)                      1.437  TIOPs/s (1/8 ) |
+| INT32  Compute   (int   , a*b+c)                      4.103  TIOPs/s (1/3 ) |
+| INT16  Compute   (short2, a*b+c)                     10.115  TIOPs/s (2/3 ) |
+| INT8   Compute   (char4 , dp4a )                     35.237  TIOPs/s ( 2x ) |
 | Memory Bandwidth ( coalesced read      )                        459.19 GB/s |
 | Memory Bandwidth ( coalesced      write)                        510.59 GB/s |
 | Memory Bandwidth (misaligned read      )                        144.76 GB/s |
 | Memory Bandwidth (misaligned      write)                         94.71 GB/s |
 | PCIe   Bandwidth (send                 )                          6.20 GB/s |
 | PCIe   Bandwidth (   receive           )                          6.71 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen3 x16)    6.37 GB/s |
+| PCIe   Bandwidth (        bidirectional)            (Gen2 x16)    6.37 GB/s |
 |-----------------------------------------------------------------------------|
 ```
 ```
@@ -174,20 +210,20 @@ Works with any GPU in Windows, Linux, macOS and Android.
 | Buffer Limits  | 11605 MB global, 11883724 KB constant                      |
 |----------------'------------------------------------------------------------|
 | Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                         0.898 TFLOPs/s (1/16) |
-| FP32  compute                                        14.426 TFLOPs/s ( 1x ) |
-| FP16  compute                                        26.872 TFLOPs/s ( 2x ) |
-| INT64 compute                                         0.694  TIOPs/s (1/24) |
-| INT32 compute                                         4.618  TIOPs/s (1/3 ) |
-| INT16 compute                                        39.104  TIOPs/s ( 2x ) |
-| INT8  compute                                        48.792  TIOPs/s ( 4x ) |
+| FP64   Compute   (double, fma  )                      0.898 TFLOPs/s (1/16) |
+| FP32   Compute   (float , fma  )                     14.426 TFLOPs/s ( 1x ) |
+| FP16   Compute   (half2 , fma  )                     26.872 TFLOPs/s ( 2x ) |
+| INT64  Compute   (long  , a*b+c)                      0.694  TIOPs/s (1/24) |
+| INT32  Compute   (int   , a*b+c)                      4.618  TIOPs/s (1/3 ) |
+| INT16  Compute   (short2, a*b+c)                     39.104  TIOPs/s ( 2x ) |
+| INT8   Compute   (char4 , dp4a )                     48.792  TIOPs/s ( 4x ) |
 | Memory Bandwidth ( coalesced read      )                        586.30 GB/s |
 | Memory Bandwidth ( coalesced      write)                        473.85 GB/s |
 | Memory Bandwidth (misaligned read      )                        894.58 GB/s |
 | Memory Bandwidth (misaligned      write)                        398.67 GB/s |
 | PCIe   Bandwidth (send                 )                          6.86 GB/s |
 | PCIe   Bandwidth (   receive           )                          7.00 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen3 x16)    6.92 GB/s |
+| PCIe   Bandwidth (        bidirectional)            (Gen2 x16)    6.92 GB/s |
 |-----------------------------------------------------------------------------|
 ```
 ```
@@ -202,20 +238,20 @@ Works with any GPU in Windows, Linux, macOS and Android.
 | Buffer Limits  | 12272 MB global, 12566528 KB constant                      |
 |----------------'------------------------------------------------------------|
 | Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                         0.570 TFLOPs/s (1/64) |
-| FP32  compute                                        17.685 TFLOPs/s (1/2 ) |
-| FP16  compute                                        33.203 TFLOPs/s ( 1x ) |
-| INT64 compute                                         2.738  TIOPs/s (1/12) |
-| INT32 compute                                         3.661  TIOPs/s (1/8 ) |
-| INT16 compute                                        16.656  TIOPs/s (1/2 ) |
-| INT8  compute                                        33.060  TIOPs/s ( 1x ) |
+| FP64   Compute   (double, fma  )                      0.570 TFLOPs/s (1/64) |
+| FP32   Compute   (float , fma  )                     17.685 TFLOPs/s (1/2 ) |
+| FP16   Compute   (half2 , fma  )                     33.203 TFLOPs/s ( 1x ) |
+| INT64  Compute   (long  , a*b+c)                      2.738  TIOPs/s (1/12) |
+| INT32  Compute   (int   , a*b+c)                      3.661  TIOPs/s (1/8 ) |
+| INT16  Compute   (short2, a*b+c)                     16.656  TIOPs/s (1/2 ) |
+| INT8   Compute   (char4 , dp4a )                     33.060  TIOPs/s ( 1x ) |
 | Memory Bandwidth ( coalesced read      )                        380.32 GB/s |
 | Memory Bandwidth ( coalesced      write)                        270.47 GB/s |
 | Memory Bandwidth (misaligned read      )                        414.11 GB/s |
 | Memory Bandwidth (misaligned      write)                        424.22 GB/s |
 | PCIe   Bandwidth (send                 )                         13.24 GB/s |
 | PCIe   Bandwidth (   receive           )                         14.22 GB/s |
-| PCIe   Bandwidth (        bidirectional)            (Gen4 x16)   13.69 GB/s |
+| PCIe   Bandwidth (        bidirectional)            (Gen3 x16)   13.69 GB/s |
 |-----------------------------------------------------------------------------|
 ```
 ```
@@ -230,13 +266,13 @@ Works with any GPU in Windows, Linux, macOS and Android.
 | Buffer Limits  | 131072 MB global, 1024 KB constant                         |
 |----------------'------------------------------------------------------------|
 | Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                         0.145 TFLOPs/s (1/64) |
-| FP32  compute                                         0.125 TFLOPs/s (1/64) |
-| FP16  compute                                          not supported        |
-| INT64 compute                                         0.370  TIOPs/s (1/24) |
-| INT32 compute                                         0.241  TIOPs/s (1/32) |
-| INT16 compute                                         0.261  TIOPs/s (1/32) |
-| INT8  compute                                         0.567  TIOPs/s (1/16) |
+| FP64   Compute   (double, fma  )                      0.145 TFLOPs/s (1/64) |
+| FP32   Compute   (float , fma  )                      0.125 TFLOPs/s (1/64) |
+| FP16   Compute   (half2 , fma  )                       not supported        |
+| INT64  Compute   (long  , a*b+c)                      0.370  TIOPs/s (1/24) |
+| INT32  Compute   (int   , a*b+c)                      0.241  TIOPs/s (1/32) |
+| INT16  Compute   (short2, a*b+c)                      0.261  TIOPs/s (1/32) |
+| INT8   Compute   (char4 , dp4a )                      0.567  TIOPs/s (1/16) |
 | Memory Bandwidth ( coalesced read      )                        183.49 GB/s |
 | Memory Bandwidth ( coalesced      write)                        139.94 GB/s |
 | Memory Bandwidth (misaligned read      )                        401.96 GB/s |
@@ -255,13 +291,13 @@ Works with any GPU in Windows, Linux, macOS and Android.
 | Buffer Limits  | 2321914 MB global, 128 KB constant                         |
 |----------------'------------------------------------------------------------|
 | Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                         7.507 TFLOPs/s (1/64) |
-| FP32  compute                                         8.266 TFLOPs/s (1/64) |
-| FP16  compute                                        12.076 TFLOPs/s (1/64) |
-| INT64 compute                                         1.549  TIOPs/s (1/64) |
-| INT32 compute                                         2.770  TIOPs/s (1/64) |
-| INT16 compute                                         9.812  TIOPs/s (1/64) |
-| INT8  compute                                         0.407  TIOPs/s (1/64) |
+| FP64   Compute   (double, fma  )                      7.507 TFLOPs/s (1/64) |
+| FP32   Compute   (float , fma  )                      8.266 TFLOPs/s (1/64) |
+| FP16   Compute   (half2 , fma  )                     12.076 TFLOPs/s (1/64) |
+| INT64  Compute   (long  , a*b+c)                      1.549  TIOPs/s (1/64) |
+| INT32  Compute   (int   , a*b+c)                      2.770  TIOPs/s (1/64) |
+| INT16  Compute   (short2, a*b+c)                      9.812  TIOPs/s (1/64) |
+| INT8   Compute   (char4 , dp4a )                      0.407  TIOPs/s (1/64) |
 | Memory Bandwidth ( coalesced read      )                        167.72 GB/s |
 | Memory Bandwidth ( coalesced      write)                         80.52 GB/s |
 | Memory Bandwidth (misaligned read      )                        193.66 GB/s |
@@ -280,13 +316,13 @@ Works with any GPU in Windows, Linux, macOS and Android.
 | Buffer Limits  | 1461020 MB global, 128 KB constant                         |
 |----------------'------------------------------------------------------------|
 | Info: OpenCL C code successfully compiled.                                  |
-| FP64  compute                                         4.888 TFLOPs/s (1/64) |
-| FP32  compute                                         5.153 TFLOPs/s (1/64) |
-| FP16  compute                                         1.139 TFLOPs/s (1/64) |
-| INT64 compute                                         1.494  TIOPs/s (1/64) |
-| INT32 compute                                         5.611  TIOPs/s (1/64) |
-| INT16 compute                                        11.153  TIOPs/s (1/64) |
-| INT8  compute                                         0.330  TIOPs/s (1/64) |
+| FP64   Compute   (double, fma  )                      4.888 TFLOPs/s (1/64) |
+| FP32   Compute   (float , fma  )                      5.153 TFLOPs/s (1/64) |
+| FP16   Compute   (half2 , fma  )                      1.139 TFLOPs/s (1/64) |
+| INT64  Compute   (long  , a*b+c)                      1.494  TIOPs/s (1/64) |
+| INT32  Compute   (int   , a*b+c)                      5.611  TIOPs/s (1/64) |
+| INT16  Compute   (short2, a*b+c)                     11.153  TIOPs/s (1/64) |
+| INT8   Compute   (char4 , dp4a )                      0.330  TIOPs/s (1/64) |
 | Memory Bandwidth ( coalesced read      )                        275.74 GB/s |
 | Memory Bandwidth ( coalesced      write)                        246.76 GB/s |
 | Memory Bandwidth (misaligned read      )                        240.12 GB/s |
